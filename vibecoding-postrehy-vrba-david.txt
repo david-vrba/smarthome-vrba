@@ -1,0 +1,53 @@
+VIBECODING WEBU — MOJE POZNATKY
+David Vrba
+
+Dělal jsem landing page pro fiktivní firmu (SmartHome.cz) celou vibecodingem.
+Tady je, co se mi osvědčilo a kde jsem narazil. Píšu to stručně, ať z toho
+něco máte, ne ať to vypadá hezky.
+
+
+CO POUŽÍT
+- Claude Code (model Opus) byl pro mě nejlepší. Vidí celý projekt, sám si
+  čte a edituje soubory, umí spustit příkazy v terminálu (server, testy).
+  Není to jen chatovací okno, do kterého kopíruješ kód tam a zpátky.
+- Na rychlý "vyplivni mi první verzi" funguje skoro cokoli (Gemini, GPT).
+  Ale na doladění a opravy chceš agenta, co má přístup k souborům.
+- Hlavní rozdíl: agent, co kód reálně mění a testuje > chatbot, co ti radí.
+
+
+POSTUP, KTERÝ MI FUNGOVAL
+1. Nejdřív si vymysli zadání jako reálný klient (jméno firmy, obor, styl).
+   Drž se ho. Web pak drží pohromadě a nevypadá jako náhodná šablona.
+2. Nech si udělat jednu celou první verzi (one-shot). Neřeš detaily.
+3. Teprve pak iteruj po malých krocích. "Oprav tohle", "změň tamto".
+4. Měř, nehádej. U mě to byl Lighthouse — dal jsem si cíl skóre >= 90
+   a po každé změně to přeměřil. Bez měření jsi slepý.
+5. Důležité věci si zapiš do souboru (u Claude je to CLAUDE.md). Agent to
+   čte při každém startu, takže nemusíš pořád opakovat kontext a pravidla.
+
+
+CO SE OSVĚDČILO U PROMPTŮ
+- Dej mu MĚŘITELNÝ cíl, ne pocit. "Lighthouse Performance >= 90 na mobilu"
+  je 100x lepší než "udělej to rychlejší".
+- Napiš tvrdá omezení dopředu: "jeden HTML soubor, nesahej na texty,
+  zachovej animace". Jinak ti to přepíše věci, co jsi měnit nechtěl.
+- "Neměň kód, dokud to nepotvrdím." Nech ho nejdřív říct PLÁN, pak ho pusť.
+  Ušetří to spoustu vrácení zpátky.
+- Buď konkrétní. "Načti fonty asynchronně" > "zrychli fonty".
+- Jeden problém = jeden prompt. Když mu naložíš pět věcí naráz, jednu zvoří.
+
+
+KDE JE PROBLÉM (na tohle bacha)
+- Agent rozbije věci potichu. Mně dvakrát spadlo skóre po "vylepšení" a
+  nikdo to neřekl — našel jsem to až měřením. Vždycky po změně otestuj.
+- Občas si vymyslí (halucinuje). Měl jsem preload na úplně jiný obrázek,
+  než byl na stránce. Vypadalo to správně, ale bylo to špatně.
+- Klasika: zavolá funkci z knihovny, která se ještě nenačetla -> chyba.
+  Pořadí načítání řeš, agent to sám nedomyslí.
+- Skóre/výsledky kolísají mezi běhy. Neber jedno měření jako pravdu.
+- Čím delší konverzace, tím víc zapomíná. Radši nový čistý chat + CLAUDE.md.
+
+
+SHRNUTÍ V JEDNÉ VĚTĚ
+Vibecoding není "napiš prompt a hotovo" — je to smyčka: zadej konkrétně,
+nech udělat, ZMĚŘ, oprav. Ty jsi pořád ten, kdo rozhoduje a kontroluje.

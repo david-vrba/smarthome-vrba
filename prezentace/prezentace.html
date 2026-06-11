@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHome.cz — CWV Optimalizace | Prezentace</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --border: #334155;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+            --text-bright: #f8fafc;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --red: #ef4444;
+            --orange: #f97316;
+            --yellow: #eab308;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* === SCROLL SECTIONS === */
+        section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 6rem;
+            position: relative;
+        }
+
+        /* === TYPOGRAPHY === */
+        .section-label {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-bright);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* === ANIMATION BASE === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+
+        /* === CARDS === */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        .card-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .card-grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+        /* === BADGES === */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-dim);
+        }
+        .badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* === SCORE COUNTERS === */
+        .score-big {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            font-family: var(--sans);
+        }
+        .score-good { color: var(--accent); }
+        .score-bad { color: var(--red); }
+        .score-label {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        /* === METRIC CARDS === */
+        .metric-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--mono);
+        }
+        .metric-name {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+        .metric-target {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-top: 0.25rem;
+            font-family: var(--mono);
+        }
+
+        /* === WATERFALL DIAGRAM === */
+        .waterfall {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .waterfall-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .waterfall-label {
+            width: 200px;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            text-align: right;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+        .waterfall-bar-wrap {
+            flex: 1;
+            height: 28px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        .waterfall-bar {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 0.75rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bar-blocking { background: linear-gradient(90deg, var(--red), var(--orange)); }
+        .bar-good { background: linear-gradient(90deg, var(--accent), #34d399); }
+        .bar-neutral { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+        .bar-deferred { background: linear-gradient(90deg, #6366f1, var(--purple)); }
+
+        /* === PROGRESS RINGS === */
+        .ring-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .ring-svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+        .ring-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 8;
+        }
+        .ring-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ring-fill.animated {
+            /* Set via JS based on score */
+        }
+        .ring-score {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--mono);
+        }
+        .ring-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        /* === CODE BLOCKS === */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            color: #e6edf3;
+        }
+        .code-block .tag { color: #7ee787; }
+        .code-block .attr { color: #79c0ff; }
+        .code-block .val { color: #a5d6ff; }
+        .code-block .comment { color: #6e7681; font-style: italic; }
+        .code-block .keyword { color: #ff7b72; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .deleted { background: rgba(239, 68, 68, 0.15); display: block; padding: 0 0.5rem; margin: 0 -0.5rem; border-left: 3px solid var(--red); }
+        .code-block .added { background: rgba(16, 185, 129, 0.1); display: block; padding: 0 0.5rem; margin: 0 -0.5rem; border-left: 3px solid var(--accent); }
+
+        /* === TABS === */
+        .tab-group {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .tab-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* === CHECKLIST === */
+        .checklist {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+        .check-icon {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--bg);
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        /* === FIX CARDS === */
+        .fix-card {
+            border-left: 3px solid var(--accent);
+        }
+        .fix-card .fix-number {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .fix-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.5rem;
+        }
+        .fix-card p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .fix-impact {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* === ARROW INDICATOR === */
+        .arrow-compare {
+            font-size: 2.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* === CLIENT BRIEF === */
+        .brief-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+        }
+        .brief-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .brief-field:last-child { border-bottom: none; }
+        .brief-key {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .brief-value {
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+
+        /* === LAYOUT HELPERS === */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-1 { gap: 0.5rem; }
+        .gap-2 { gap: 1rem; }
+        .gap-3 { gap: 1.5rem; }
+        .gap-4 { gap: 2rem; }
+        .gap-6 { gap: 3rem; }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mt-6 { margin-top: 3rem; }
+        .w-full { width: 100%; }
+        .max-w-5xl { max-width: 72rem; }
+
+        /* === SCROLL INDICATOR === */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            font-family: var(--mono);
+            letter-spacing: 0.1em;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+        .scroll-hint svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-dim);
+        }
+
+        /* === SECTION DIVIDER LINE === */
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 6rem;
+            right: 6rem;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+        section:first-child::before { display: none; }
+
+        /* === TITLE SECTION SPECIAL === */
+        #title {
+            text-align: center;
+            align-items: center;
+        }
+        #title .section-title {
+            font-size: 4.5rem;
+            max-width: 900px;
+            background: linear-gradient(135deg, var(--text-bright) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* === TOOL CARDS === */
+        .tool-card .tool-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .tool-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.25rem;
+        }
+        .tool-card p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .tool-result {
+            margin-top: 0.75rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* === TAKEAWAY CARDS === */
+        .takeaway {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.5rem;
+        }
+        .takeaway-num {
+            font-family: var(--mono);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.4;
+            flex-shrink: 0;
+            width: 3rem;
+        }
+        .takeaway h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.25rem;
+        }
+        .takeaway p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* === QA SECTION === */
+        #qa {
+            text-align: center;
+            align-items: center;
+        }
+        #qa .section-title {
+            font-size: 6rem;
+        }
+
+        /* === NAV DOTS === */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.5);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-snap-type: none; scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .scroll-hint { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" aria-label="Navigace sekcí"></nav>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TITLE -->
+<!-- ============================================================ -->
+<section id="title">
+    <div class="reveal">
+        <div class="badge" style="margin-bottom: 2rem;">
+            <span class="badge-dot"></span>
+            ITK / SIN — 2026
+        </div>
+    </div>
+    <h1 class="section-title reveal reveal-delay-1">Optimalizace Core Web Vitals</h1>
+    <p class="section-subtitle reveal reveal-delay-2" style="text-align: center; max-width: 560px;">
+        SmartHome.cz — zrychlení z <strong style="color: var(--red);">71</strong> na <strong style="color: var(--accent);">99</strong> bodů na mobilu, poté rozšíření webu o galerii, produkty a objednávku
+    </p>
+    <div class="flex gap-2 mt-4 reveal reveal-delay-3">
+        <div class="badge">David</div>
+        <div class="badge">+ kamarád</div>
+    </div>
+    <div class="scroll-hint">
+        <span>SCROLL</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: CLIENT & BUSINESS IDENTITY -->
+<!-- ============================================================ -->
+<section id="client">
+    <div class="section-label reveal">01 — Proces</div>
+    <h2 class="section-title reveal reveal-delay-1">Výběr klienta<br>& firemní identity</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Simulovali jsme reálný workflow — náhodně jsme si vybrali obor podnikání a vytvořili kompletní identitu klienta, jako v praxi.</p>
+
+    <div class="flex gap-6 mt-6" style="align-items: flex-start;">
+        <div class="brief-card reveal reveal-delay-3">
+            <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;">Client Brief</div>
+            <div class="brief-field">
+                <span class="brief-key">Firma</span>
+                <span class="brief-value">SmartHome.cz</span>
+            </div>
+            <div class="brief-field">
+                <span class="brief-key">Obor</span>
+                <span class="brief-value">Chytré domácnosti</span>
+            </div>
+            <div class="brief-field">
+                <span class="brief-key">Cílová skupina</span>
+                <span class="brief-value">Náročný klient</span>
+            </div>
+            <div class="brief-field">
+                <span class="brief-key">Hodnoty</span>
+                <span class="brief-value">Technologie, komfort, bezpečí</span>
+            </div>
+            <div class="brief-field">
+                <span class="brief-key">Design</span>
+                <span class="brief-value">Glassmorphism, metalické tóny</span>
+            </div>
+            <div class="brief-field">
+                <span class="brief-key">Formát</span>
+                <span class="brief-value">Single-file HTML, bez frameworku</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 reveal reveal-delay-4" style="max-width: 400px;">
+            <div class="card" style="padding: 1.25rem;">
+                <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.25rem;">Proč simulovat klienta?</div>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">V reálném světě pracujete s cizí značkou, vizuální identitou a omezeními. My jsme si toto vytvořili od nuly — obor, název, design jazyk, cílovou skupinu.</p>
+            </div>
+            <div class="card" style="padding: 1.25rem;">
+                <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.25rem;">Pracovní postup</div>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Identita klienta → vizuální jazyk → stavba webu → testování → optimalizace výkonu → validace přístupnosti</p>
+            </div>
+            <div class="flex gap-1" style="flex-wrap: wrap;">
+                <div class="badge">HTML5</div>
+                <div class="badge">CSS3</div>
+                <div class="badge">GSAP</div>
+                <div class="badge">Paper.js</div>
+                <div class="badge">Google Fonts</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: WHAT IS SMARTHOME.CZ -->
+<!-- ============================================================ -->
+<section id="about">
+    <div class="section-label reveal">02 — Projekt</div>
+    <h2 class="section-title reveal reveal-delay-1">Co je SmartHome.cz?</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Jednostránková landing page pro fiktivní firmu. Jeden soubor <code style="color: var(--accent);">index.html</code>, žádný build systém, žádný framework.</p>
+
+    <div class="card-grid card-grid-4 mt-4">
+        <div class="card reveal reveal-delay-2" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🪟</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Glassmorphism</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Průhledné karty s blur efektem</p>
+        </div>
+        <div class="card reveal reveal-delay-3" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
+            <div style="font-weight: 700; color: var(--text-bright);">GSAP Animace</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Timeline, parallax, ScrollTrigger</p>
+        </div>
+        <div class="card reveal reveal-delay-4" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🫧</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Paper.js Canvas</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Tekutý blob na pozadí</p>
+        </div>
+        <div class="card reveal reveal-delay-5" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Vlastní kurzor</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">mix-blend-mode difference</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: WHY CWV? -->
+<!-- ============================================================ -->
+<section id="cwv">
+    <div class="section-label reveal">03 — Core Web Vitals</div>
+    <h2 class="section-title reveal reveal-delay-1">Proč na rychlosti záleží?</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Google Core Web Vitals — rankovací signál od roku 2021. Rychlejší web = lepší SEO + lepší UX.</p>
+
+    <div class="card-grid card-grid-3 mt-4">
+        <div class="card reveal reveal-delay-2">
+            <div style="font-size: 0.7rem; font-family: var(--mono); color: var(--accent); font-weight: 700; margin-bottom: 0.75rem;">LCP</div>
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--text-bright);">Largest Contentful Paint</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Kdy se zobrazí největší viditelný element?</p>
+            <div style="margin-top: 1rem; font-family: var(--mono); font-size: 0.8rem;">
+                <span style="color: var(--accent);">Dobrý: &lt; 2.5s</span><br>
+                <span style="color: var(--orange);">Potřebuje: 2.5–4s</span><br>
+                <span style="color: var(--red);">Špatný: &gt; 4s</span>
+            </div>
+        </div>
+        <div class="card reveal reveal-delay-3">
+            <div style="font-size: 0.7rem; font-family: var(--mono); color: var(--yellow); font-weight: 700; margin-bottom: 0.75rem;">CLS</div>
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--text-bright);">Cumulative Layout Shift</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Kolik se stránka „posouvá" při načítání?</p>
+            <div style="margin-top: 1rem; font-family: var(--mono); font-size: 0.8rem;">
+                <span style="color: var(--accent);">Dobrý: &lt; 0.1</span><br>
+                <span style="color: var(--orange);">Potřebuje: 0.1–0.25</span><br>
+                <span style="color: var(--red);">Špatný: &gt; 0.25</span>
+            </div>
+        </div>
+        <div class="card reveal reveal-delay-4">
+            <div style="font-size: 0.7rem; font-family: var(--mono); color: var(--blue); font-weight: 700; margin-bottom: 0.75rem;">TBT / INP</div>
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--text-bright);">Total Blocking Time</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Jak dlouho JS blokuje interakci?</p>
+            <div style="margin-top: 1rem; font-family: var(--mono); font-size: 0.8rem;">
+                <span style="color: var(--accent);">Dobrý: &lt; 200ms</span><br>
+                <span style="color: var(--orange);">Potřebuje: 200–600ms</span><br>
+                <span style="color: var(--red);">Špatný: &gt; 600ms</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-4 mt-4 reveal reveal-delay-5">
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--red);">53%</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">mobilních uživatelů odejde po 3 sekundách</p>
+        </div>
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--orange);">-7%</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">konverzí za každou sekundu zpoždění</p>
+        </div>
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--accent);">2021</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">CWV = Google rankovací faktor</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: BEFORE — THE PROBLEM -->
+<!-- ============================================================ -->
+<section id="before">
+    <div class="section-label reveal">04 — Výchozí stav</div>
+    <h2 class="section-title reveal reveal-delay-1">Jak špatné to bylo</h2>
+
+    <div class="flex gap-6 mt-4" style="align-items: flex-start;">
+        <div class="flex flex-col items-center reveal reveal-delay-2">
+            <div class="score-big score-bad" data-count="71">0</div>
+            <div class="score-label">Performance (mobil)</div>
+        </div>
+
+        <div class="flex flex-col gap-3" style="flex: 1;">
+            <div class="card-grid card-grid-4 reveal reveal-delay-3">
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--red);" data-count-decimal="5.9">0</div>
+                    <div class="metric-name">LCP</div>
+                    <div class="metric-target">cíl: &lt; 2.5s</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--orange);" data-count-decimal="3.1">0</div>
+                    <div class="metric-name">FCP</div>
+                    <div class="metric-target">cíl: &lt; 1.8s</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);">0ms</div>
+                    <div class="metric-name">TBT</div>
+                    <div class="metric-target">cíl: &lt; 200ms</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);">0</div>
+                    <div class="metric-name">CLS</div>
+                    <div class="metric-target">cíl: &lt; 0.1</div>
+                </div>
+            </div>
+
+            <div class="card reveal reveal-delay-4" style="padding: 1.5rem;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--red); font-weight: 700; margin-bottom: 1rem;">RENDER-BLOCKING WATERFALL (MOBIL)</div>
+                <div class="waterfall">
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">index.html</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-neutral" data-width="5">HTML</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">cdn.tailwindcss.com</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-blocking" data-width="50">1,524ms BLOCKING</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">fonts.googleapis.com</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-blocking" data-width="48">1,458ms BLOCKING</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">fonts.gstatic.com</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-deferred" data-width="80">4,701ms (font chain)</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label" style="color: var(--red); font-weight: 700;">LCP</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar" style="background: var(--red); width: 0;" data-width="97">5,939ms</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; font-family: var(--mono); font-size: 0.8rem; color: var(--red); font-weight: 700;">
+                    2,982ms render-blocking celkem
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: WHAT WE FIXED -->
+<!-- ============================================================ -->
+<section id="fixes">
+    <div class="section-label reveal">05 — Opravy</div>
+    <h2 class="section-title reveal reveal-delay-1">Co jsme opravili</h2>
+
+    <div class="card-grid card-grid-2 mt-4">
+        <div class="card fix-card reveal reveal-delay-1">
+            <div class="fix-number">FIX 01</div>
+            <h4>Tailwind CDN &rarr; Inline CSS</h4>
+            <p>Synchronní &lt;script&gt; stahoval 127KB JS, spustil JIT kompilaci, vygeneroval CSS. Nahrazeno ~190 ručně extrahovanými utility třídami přímo v &lt;style&gt;.</p>
+            <div class="fix-impact">&minus;1,524ms LCP</div>
+        </div>
+        <div class="card fix-card reveal reveal-delay-2">
+            <div class="fix-number">FIX 02</div>
+            <h4>Google Fonts &rarr; Async Loading</h4>
+            <p>Render-blocking &lt;link rel="stylesheet"&gt; nahrazen trikem <code style="color: var(--accent);">media="print" onload="this.media='all'"</code>. Text se zobrazí okamžitě, font se načte na pozadí.</p>
+            <div class="fix-impact">&minus;1,458ms LCP</div>
+        </div>
+        <div class="card fix-card reveal reveal-delay-3">
+            <div class="fix-number">FIX 03</div>
+            <h4>Preload URL &rarr; Správný obrázek</h4>
+            <p>Preload odkazoval na Unsplash, ale skutečný hero obrázek je z e-spirit.cloud. Opraveno + přidán preconnect k image hostu.</p>
+            <div class="fix-impact">&minus;300ms LCP</div>
+        </div>
+        <div class="card fix-card reveal reveal-delay-4">
+            <div class="fix-number">FIX 04</div>
+            <h4>Paper.js &rarr; Pouze desktop</h4>
+            <p>67KB knihovna pro tekutý blob efekt se načítala i na mobilu, kde je sotva viditelná. Nyní se načítá podmíněně: <code style="color: var(--accent);">if (innerWidth > 1024)</code>.</p>
+            <div class="fix-impact">&minus;67KB na mobilu</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: CODE SHOWCASE -->
+<!-- ============================================================ -->
+<section id="code">
+    <div class="section-label reveal">06 — Kód</div>
+    <h2 class="section-title reveal reveal-delay-1">Před vs. Po</h2>
+
+    <div class="tab-group reveal reveal-delay-2">
+        <button class="tab-btn active" data-tab="tailwind">Tailwind CDN</button>
+        <button class="tab-btn" data-tab="fonts">Google Fonts</button>
+        <button class="tab-btn" data-tab="hero">Hero Text LCP</button>
+    </div>
+
+    <div class="tab-content active" id="tab-tailwind">
+        <div class="flex gap-3" style="align-items: stretch;">
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--red); font-weight: 700; margin-bottom: 0.5rem;">PRED</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- 127KB synchronni script, blokuje render --&gt;</span>
+<span class="deleted"><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"https://cdn.tailwindcss.com"</span><span class="tag">&gt;&lt;/script&gt;</span></span>
+<span class="deleted"><span class="tag">&lt;script&gt;</span></span>
+<span class="deleted">  tailwind.config = {</span>
+<span class="deleted">    theme: { extend: { colors: { metal: {...} } } }</span>
+<span class="deleted">  }</span>
+<span class="deleted"><span class="tag">&lt;/script&gt;</span></span>
+                </div>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">PO</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- ~15KB inline CSS, zadny sitovy pozadavek --&gt;</span>
+<span class="added"><span class="tag">&lt;style&gt;</span></span>
+<span class="added">  .flex { display: flex; }</span>
+<span class="added">  .text-metal-900 { color: #212529; }</span>
+<span class="added">  .bg-white\/70 { background: rgba(255,255,255,0.7); }</span>
+<span class="added">  <span class="comment">/* ~190 utility trid rucne extrahovanych */</span></span>
+<span class="added"><span class="tag">&lt;/style&gt;</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-fonts">
+        <div class="flex gap-3" style="align-items: stretch;">
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--red); font-weight: 700; margin-bottom: 0.5rem;">PRED</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- Render-blocking stylesheet --&gt;</span>
+<span class="deleted"><span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span></span>
+<span class="deleted">  <span class="attr">href</span>=<span class="val">"https://fonts.googleapis.com/..."</span><span class="tag">&gt;</span></span>
+<span class="comment">
+&lt;!-- Prohlizec CEKA na stazeni nez zacne kreslit --&gt;</span>
+                </div>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">PO</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- Async: neblokuje render --&gt;</span>
+<span class="added"><span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span></span>
+<span class="added">  <span class="attr">href</span>=<span class="val">"fonts.googleapis.com/..."</span></span>
+<span class="added">  <span class="attr">media</span>=<span class="val">"print"</span></span>
+<span class="added">  <span class="attr">onload</span>=<span class="val">"this.media='all'"</span><span class="tag">&gt;</span></span>
+<span class="added"><span class="tag">&lt;noscript&gt;&lt;link ...&gt;&lt;/noscript&gt;</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-hero">
+        <div class="flex gap-3" style="align-items: stretch;">
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--red); font-weight: 700; margin-bottom: 0.5rem;">PRED</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- Ceka na GSAP window.load = 3-5s na mobilu --&gt;</span>
+<span class="deleted"><span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="val">"opacity-0 gsap-fade"</span><span class="tag">&gt;</span></span>
+<span class="deleted">  Navrhujeme a instalujeme...</span>
+<span class="deleted"><span class="tag">&lt;/p&gt;</span></span>
+<span class="comment">
+&lt;!-- Text ma opacity: 0 dokud GSAP nespusti --&gt;
+&lt;!-- Na 4G mobilu = LCP 5.9s --&gt;</span>
+                </div>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">PO</div>
+                <div class="code-block">
+<span class="comment">&lt;!-- CSS animace = okamzita, bez JS --&gt;</span>
+<span class="added"><span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="val">"hero-text-enter"</span><span class="tag">&gt;</span></span>
+<span class="added">  Navrhujeme a instalujeme...</span>
+<span class="added"><span class="tag">&lt;/p&gt;</span></span>
+<span class="comment">
+</span><span class="added"><span class="keyword">@keyframes</span> fadeSlideUp {</span>
+<span class="added">  from { opacity: 0; transform: translateY(15px); }</span>
+<span class="added">  to { opacity: 1; transform: translateY(0); }</span>
+<span class="added">}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: AFTER — RESULTS -->
+<!-- ============================================================ -->
+<section id="after">
+    <div class="section-label reveal">07 — Vysledky</div>
+    <h2 class="section-title reveal reveal-delay-1">Po optimalizaci</h2>
+
+    <div class="flex gap-6 mt-4" style="align-items: flex-start;">
+        <div class="flex flex-col items-center reveal reveal-delay-2">
+            <div class="score-big score-good" data-count="99">0</div>
+            <div class="score-label">Performance (mobil)</div>
+            <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-top: 1rem;">+28 bodu</div>
+        </div>
+
+        <div class="flex flex-col gap-3" style="flex: 1;">
+            <div class="card-grid card-grid-4 reveal reveal-delay-3">
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);" data-count-decimal="2.0">0</div>
+                    <div class="metric-name">LCP</div>
+                    <div class="metric-target" style="color: var(--accent);">&minus;66%</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);" data-count-decimal="1.5">0</div>
+                    <div class="metric-name">FCP</div>
+                    <div class="metric-target" style="color: var(--accent);">&minus;52%</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);">0ms</div>
+                    <div class="metric-name">TBT</div>
+                    <div class="metric-target">beze zmeny</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value" style="color: var(--accent);">0</div>
+                    <div class="metric-name">CLS</div>
+                    <div class="metric-target">beze zmeny</div>
+                </div>
+            </div>
+
+            <div class="card reveal reveal-delay-4" style="padding: 1.5rem;">
+                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 1rem;">OPTIMALIZOVANY WATERFALL (MOBIL)</div>
+                <div class="waterfall">
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">HTML + inline CSS</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-good" data-width="15">okamzite</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">preload hero img</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-good" data-width="30">paralelne</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">Google Fonts (async)</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-neutral" data-width="25">non-blocking</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label">GSAP (deferred)</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-deferred" data-width="30">po DOMContentLoaded</div>
+                        </div>
+                    </div>
+                    <div class="waterfall-row">
+                        <div class="waterfall-label" style="color: var(--accent); font-weight: 700;">LCP</div>
+                        <div class="waterfall-bar-wrap">
+                            <div class="waterfall-bar bar-good" style="width: 0;" data-width="33">~2.0s</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; font-family: var(--mono); font-size: 0.8rem; color: var(--accent); font-weight: 700;">
+                    0ms render-blocking
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 9: FULL SCORECARD -->
+<!-- ============================================================ -->
+<section id="scorecard">
+    <div class="section-label reveal">08 — Celkove skore</div>
+    <h2 class="section-title reveal reveal-delay-1">Lighthouse Scorecard</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Vsechny 4 kategorie na maximum.</p>
+
+    <div class="card-grid card-grid-4 mt-6">
+        <div class="card reveal reveal-delay-2">
+            <div class="ring-container">
+                <div style="position: relative;">
+                    <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                        <circle class="ring-fill" cx="60" cy="60" r="50" stroke="var(--accent)" data-score="99"/>
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(0);">
+                        <span class="ring-score" style="color: var(--accent);" data-count="99">0</span>
+                    </div>
+                </div>
+                <div class="ring-label">Performance</div>
+            </div>
+        </div>
+        <div class="card reveal reveal-delay-3">
+            <div class="ring-container">
+                <div style="position: relative;">
+                    <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                        <circle class="ring-fill" cx="60" cy="60" r="50" stroke="var(--accent)" data-score="100"/>
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(0);">
+                        <span class="ring-score" style="color: var(--accent);" data-count="100">0</span>
+                    </div>
+                </div>
+                <div class="ring-label">Accessibility</div>
+            </div>
+        </div>
+        <div class="card reveal reveal-delay-4">
+            <div class="ring-container">
+                <div style="position: relative;">
+                    <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                        <circle class="ring-fill" cx="60" cy="60" r="50" stroke="var(--accent)" data-score="100"/>
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(0);">
+                        <span class="ring-score" style="color: var(--accent);" data-count="100">0</span>
+                    </div>
+                </div>
+                <div class="ring-label">Best Practices</div>
+            </div>
+        </div>
+        <div class="card reveal reveal-delay-5">
+            <div class="ring-container">
+                <div style="position: relative;">
+                    <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                        <circle class="ring-fill" cx="60" cy="60" r="50" stroke="var(--accent)" data-score="100"/>
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(0);">
+                        <span class="ring-score" style="color: var(--accent);" data-count="100">0</span>
+                    </div>
+                </div>
+                <div class="ring-label">SEO</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 10: TOOLS -->
+<!-- ============================================================ -->
+<section id="tools">
+    <div class="section-label reveal">09 — Nastroje</div>
+    <h2 class="section-title reveal reveal-delay-1">Pouzite nastroje</h2>
+
+    <div class="card-grid card-grid-5 mt-4">
+        <div class="card tool-card reveal reveal-delay-1">
+            <div class="tool-icon" style="background: rgba(239, 68, 68, 0.15);">🔥</div>
+            <h4>Lighthouse</h4>
+            <p>Performance, Accessibility, Best Practices, SEO audit</p>
+            <div class="tool-result">99 / 100 / 100 / 100</div>
+        </div>
+        <div class="card tool-card reveal reveal-delay-2">
+            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.15);">♿</div>
+            <h4>WAVE WebAIM</h4>
+            <p>Pristupnost pro postizene uzivatele (WCAG 2.1)</p>
+            <div class="tool-result">0 chyb</div>
+        </div>
+        <div class="card tool-card reveal reveal-delay-3">
+            <div class="tool-icon" style="background: rgba(139, 92, 246, 0.15);">✓</div>
+            <h4>W3C Validator</h4>
+            <p>HTML/CSS validita dle specifikace</p>
+            <div class="tool-result">3 false positives</div>
+        </div>
+        <div class="card tool-card reveal reveal-delay-4">
+            <div class="tool-icon" style="background: rgba(234, 179, 8, 0.15);">⚡</div>
+            <h4>html-validate</h4>
+            <p>Moderni offline HTML validator (CLI)</p>
+            <div class="tool-result">0 chyb</div>
+        </div>
+        <div class="card tool-card reveal reveal-delay-5">
+            <div class="tool-icon" style="background: rgba(16, 185, 129, 0.15);">🔧</div>
+            <h4>Chrome DevTools</h4>
+            <p>Network waterfall, Performance profiling</p>
+            <div class="tool-result">Analyza kriticke cesty</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 11: ACCESSIBILITY -->
+<!-- ============================================================ -->
+<section id="a11y">
+    <div class="section-label reveal">10 — Pristupnost</div>
+    <h2 class="section-title reveal reveal-delay-1">Accessibility opravy</h2>
+    <p class="section-subtitle reveal reveal-delay-2">WCAG 2.1 AA — web pristupny vsem uzivatelum.</p>
+
+    <ul class="checklist mt-4">
+        <li class="reveal reveal-delay-1"><div class="check-icon">✓</div> Skip link pro klavesovou navigaci</li>
+        <li class="reveal reveal-delay-2"><div class="check-icon">✓</div> focus-visible outline styly</li>
+        <li class="reveal reveal-delay-3"><div class="check-icon">✓</div> prefers-reduced-motion podpora</li>
+        <li class="reveal reveal-delay-4"><div class="check-icon">✓</div> aria-label na navigaci</li>
+        <li class="reveal reveal-delay-5"><div class="check-icon">✓</div> Semanticky HTML (main, nav, section)</li>
+        <li class="reveal reveal-delay-5"><div class="check-icon">✓</div> Validni hierarchie nadpisu</li>
+    </ul>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 12: PHASE 2 — EXTENSIONS OVERVIEW -->
+<!-- ============================================================ -->
+<section id="rozsireni">
+    <div class="section-label reveal">11 — Rozšíření webu</div>
+    <h2 class="section-title reveal reveal-delay-1">Fáze 2: Rozšíření webu</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Po dosažení 100/100 jsme web rozšířili podle seminárních materiálů — obrázky, responzivní obrázky, hero sekce a responzivní menu.</p>
+
+    <div class="card-grid card-grid-4 mt-4">
+        <div class="card reveal reveal-delay-2" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🖼️</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Galerie realizací</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">4 responzivní obrázky, AVIF + WebP</p>
+        </div>
+        <div class="card reveal reveal-delay-3" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛒</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Produkty & ceník</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">5 reálných produktů s cenami</p>
+        </div>
+        <div class="card reveal reveal-delay-4" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🍔</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Responzivní menu</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Hamburger pod 768 px, aria</p>
+        </div>
+        <div class="card reveal reveal-delay-5" style="text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💳</div>
+            <div style="font-weight: 700; color: var(--text-bright);">Payment wall</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">Objednávka → platební brána</p>
+        </div>
+    </div>
+
+    <div class="flex gap-4 mt-4 reveal reveal-delay-5">
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--accent);">98 / 98</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">Lighthouse desktop / mobil i po rozšíření</p>
+        </div>
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--accent);">0</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">CLS — žádné posuny layoutu</p>
+        </div>
+        <div class="card" style="padding: 1.25rem; flex: 1; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--blue);">44</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">obrázkových variant (9 fotek × formáty × velikosti)</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 13: RESPONSIVE IMAGES -->
+<!-- ============================================================ -->
+<section id="responzivni-obrazky">
+    <div class="section-label reveal">12 — Responzivní obrázky</div>
+    <h2 class="section-title reveal reveal-delay-1">Responzivní & optimalizované obrázky</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Galerie i produkty: <code style="color: var(--accent);">&lt;picture&gt;</code> s AVIF + WebP, srcset/sizes, lazy loading a pevné rozměry proti CLS.</p>
+
+    <div class="flex gap-3 mt-4" style="align-items: stretch;">
+        <div style="flex: 1;">
+            <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--red); font-weight: 700; margin-bottom: 0.5rem;">PŘED</div>
+            <div class="code-block">
+<span class="comment">&lt;!-- Jeden velký obrázek pro všechna zařízení --&gt;</span>
+<span class="deleted"><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"foto.jpg"</span> <span class="attr">width</span>=<span class="val">"2500"</span><span class="tag">&gt;</span></span>
+<span class="comment">
+&lt;!-- Mobil stahuje 2500px JPG (~400 KB) --&gt;</span>
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">PO</div>
+            <div class="code-block">
+<span class="added"><span class="tag">&lt;picture&gt;</span></span>
+<span class="added">  <span class="tag">&lt;source</span> <span class="attr">type</span>=<span class="val">"image/avif"</span></span>
+<span class="added">    <span class="attr">srcset</span>=<span class="val">"g1-400.avif 400w, g1-800.avif 800w…"</span></span>
+<span class="added">    <span class="attr">sizes</span>=<span class="val">"(min-width:768px) 46vw, 92vw"</span><span class="tag">&gt;</span></span>
+<span class="added">  <span class="tag">&lt;source</span> <span class="attr">type</span>=<span class="val">"image/webp"</span> <span class="attr">srcset</span>=<span class="val">"…"</span><span class="tag">&gt;</span></span>
+<span class="added">  <span class="tag">&lt;img</span> <span class="attr">loading</span>=<span class="val">"lazy"</span> <span class="attr">width</span>=<span class="val">"1200"</span> <span class="attr">height</span>=<span class="val">"900"</span><span class="tag">&gt;</span></span>
+<span class="added"><span class="tag">&lt;/picture&gt;</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-grid card-grid-4 mt-4">
+        <div class="card reveal reveal-delay-2" style="text-align: center;">
+            <div class="metric-value" style="color: var(--accent); font-size: 1.8rem;">AVIF</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">~25–30 % menší než WebP</p>
+        </div>
+        <div class="card reveal reveal-delay-3" style="text-align: center;">
+            <div class="metric-value" style="color: var(--blue); font-size: 1.8rem;">1×</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">prohlížeč stáhne 1 variantu ze 44</p>
+        </div>
+        <div class="card reveal reveal-delay-4" style="text-align: center;">
+            <div class="metric-value" style="color: var(--accent); font-size: 1.8rem;">~28 KB</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">celá galerie na mobilu</p>
+        </div>
+        <div class="card reveal reveal-delay-5" style="text-align: center;">
+            <div class="metric-value" style="color: var(--accent); font-size: 1.8rem;">CLS 0</div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem;">width/height + aspect-ratio</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 14: PRODUCTS, MENU & CHECKOUT -->
+<!-- ============================================================ -->
+<section id="objednavka">
+    <div class="section-label reveal">13 — Konverze</div>
+    <h2 class="section-title reveal reveal-delay-1">Produkty, menu & objednávka</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Reálné produkty s cenami, responzivní navigace a CTA, které vede až k platební bráně.</p>
+
+    <div class="card-grid card-grid-3 mt-4">
+        <div class="card fix-card reveal reveal-delay-2">
+            <div class="fix-number">RESPONZIVNÍ MENU</div>
+            <h4>Hamburger pod 768 px</h4>
+            <p>Před: odkazy se na mobilu ztrácely. Po: tlačítko s <code style="color: var(--accent);">aria-expanded</code>, animace do křížku a glass dropdown.</p>
+        </div>
+        <div class="card fix-card reveal reveal-delay-3">
+            <div class="fix-number">PRODUKTY</div>
+            <h4>5 reálných produktů</h4>
+            <p>tado, MINIX, RainPoint — s fotkami, popisem a cenou (990–9 490 Kč). Responzivní grid 1 → 2 → 3 sloupce.</p>
+        </div>
+        <div class="card fix-card reveal reveal-delay-4">
+            <div class="fix-number">PAYMENT WALL</div>
+            <h4>Objednávka → platba</h4>
+            <p>„Konzultace" i „Objednat" otevřou modální platební bránu. Přístupná: <code style="color: var(--accent);">role="dialog"</code>, focus-trap, ESC.</p>
+        </div>
+    </div>
+
+    <div class="card reveal reveal-delay-5 mt-4" style="padding: 1.25rem;">
+        <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.75rem;">FLOW OBJEDNÁVKY</div>
+        <div class="flex gap-2" style="align-items: center; flex-wrap: wrap; font-family: var(--mono); font-size: 0.85rem;">
+            <span class="badge">Tlačítko CTA</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge">Souhrn položky + cena</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge">Platební formulář</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge" style="border-color: var(--accent); color: var(--accent);">Potvrzení ✓</span>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 14: NASAZENÍ & HOSTING -->
+<!-- ============================================================ -->
+<section id="hosting">
+    <div class="section-label reveal">14 — Nasazení &amp; hosting</div>
+    <h2 class="section-title reveal reveal-delay-1">Kam web nasadit?</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Výstupem je veřejný odkaz. Porovnali jsme free hostingy pro statický web — liší se hlavně přenosem dat a doménou, ne technicky.</p>
+
+    <div class="card reveal reveal-delay-2 mt-4" style="padding: 1rem; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+            <thead>
+                <tr style="text-align: left; font-family: var(--mono); color: var(--accent); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <th style="padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);">Hosting</th>
+                    <th style="padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);">Výchozí doména</th>
+                    <th style="padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);">Přenos zdarma</th>
+                    <th style="padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);">Serverless</th>
+                    <th style="padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);">Háček</th>
+                </tr>
+            </thead>
+            <tbody style="font-family: var(--mono);">
+                <tr>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); font-weight: 700;">Cloudflare&nbsp;Pages</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">.pages.dev</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--accent); font-weight: 700;">♾️ neomezeně</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);">✅</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">UI techničtější</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); font-weight: 700;">Vercel</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">.vercel.app</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);">100&nbsp;GB/měs</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);">✅</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">komerce jen placené</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); font-weight: 700;">Netlify</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">.netlify.app</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);">100&nbsp;GB/měs</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);">✅</td>
+                    <td style="padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-dim);">podobné Vercelu</td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.55rem 0.75rem; font-weight: 700;">GitHub&nbsp;Pages</td>
+                    <td style="padding: 0.55rem 0.75rem; color: var(--text-dim);">.github.io/&lt;repo&gt;/</td>
+                    <td style="padding: 0.55rem 0.75rem;">~100&nbsp;GB (měkký)</td>
+                    <td style="padding: 0.55rem 0.75rem; color: var(--red);">❌</td>
+                    <td style="padding: 0.55rem 0.75rem; color: var(--text-dim);">jen statika, podcesta</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-grid card-grid-2 mt-4">
+        <div class="card fix-card reveal reveal-delay-3">
+            <div class="fix-number">ARGUMENTACE</div>
+            <h4>Rozhoduje přenos, ne technika</h4>
+            <p>Pro statický web zvládnou vše. <strong style="color: var(--accent);">Cloudflare</strong> = neomezený přenos zdarma; <strong>Vercel</strong> = nejlepší DX; <strong>GitHub Pages</strong> = nulová závislost a web u kódu.</p>
+        </div>
+        <div class="card fix-card reveal reveal-delay-4">
+            <div class="fix-number">A 3D?</div>
+            <h4>3D běží v prohlížeči klienta</h4>
+            <p>WebGL/Three.js počítá GPU návštěvníka — host posílá jen statické soubory. I komplexní 3D jde i na GitHub Pages; limit je jen velikost assetů a přenos.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 15: FORMA vs. SDĚLENÍ (zentry pushback + 3D About page) -->
+<!-- ============================================================ -->
+<section id="forma">
+    <div class="section-label reveal">15 — Forma vs. sdělení</div>
+    <h2 class="section-title reveal reveal-delay-1">Nejdřív co děláme. Pak teprve efekt.</h2>
+    <p class="section-subtitle reveal reveal-delay-2">Největší 3D weby vypadají božsky — a po pěti minutách pořád nevíš, co ta firma vlastně dělá. To je past. My ji obešli.</p>
+
+    <div class="card-grid card-grid-2 mt-4">
+        <div class="card fix-card reveal reveal-delay-3" style="border-color: color-mix(in srgb, var(--red) 40%, var(--border));">
+            <div class="fix-number" style="color: var(--red);">PAST · zentry.com</div>
+            <h4>Majestátní 3D, nulové sdělení</h4>
+            <p>Vizuálně jeden z nejlepších webů, co existují. Jenže po 5 minutách scrollování pořád nevíš, co je to za firmu a co prodává. Forma pohřbila obsah — komické, kolik peněz a designu padlo na něco, co nikdo „nepřečte".</p>
+        </div>
+        <div class="card fix-card reveal reveal-delay-4" style="border-color: color-mix(in srgb, var(--accent) 40%, var(--border));">
+            <div class="fix-number">NÁŠ PŘÍSTUP · SmartHome.cz</div>
+            <h4>Za vteřinu jasné, pak paráda</h4>
+            <p>Hero + produkty + ceník = okamžitě víš, co děláme a za kolik. Teprve pak má 3D show prostor — schovaná pod <code style="color: var(--accent);">/o-mne</code>, kde je efekt účelem a žádné sdělení neničí.</p>
+        </div>
+    </div>
+
+    <div class="card reveal reveal-delay-5 mt-4" style="padding: 1.25rem;">
+        <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 0.75rem;">STRÁNKA „O ZAKLADATELI" — HYBRIDNÍ 3D (plain HTML + CDN, bez buildu)</div>
+        <div class="flex gap-2" style="align-items: center; flex-wrap: wrap; font-family: var(--mono); font-size: 0.85rem;">
+            <span class="badge">Jasný hero (kdo + co)</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge" style="border-color: var(--accent); color: var(--accent);">① Real-time WebGL (Three.js)</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge" style="border-color: #e9b873; color: #e9b873;">② Obrazová sekvence (let dronem)</span>
+            <span style="color: var(--text-dim);">→</span>
+            <span class="badge">Pointa: forma ≠ sdělení</span>
+        </div>
+        <p style="margin-top: 1rem; color: var(--text-dim); font-size: 0.85rem;">Jeden Lenis + GSAP scroll žene obě techniky, vždy běží jen jedna → spektákl bez ztráty výkonu i bez build systému.</p>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 16: KEY TAKEAWAYS -->
+<!-- ============================================================ -->
+<section id="takeaways">
+    <div class="section-label reveal">16 — Závěr</div>
+    <h2 class="section-title reveal reveal-delay-1">Klicova pouceni</h2>
+
+    <div class="flex flex-col gap-2 mt-4" style="max-width: 700px;">
+        <div class="card takeaway reveal reveal-delay-1">
+            <div class="takeaway-num">01</div>
+            <div>
+                <h4>Render-blocking = nepritel #1</h4>
+                <p>Vzdy zkontrolujte, co blokuje FCP/LCP. Dva zdroje nam staly 3 sekundy.</p>
+            </div>
+        </div>
+        <div class="card takeaway reveal reveal-delay-2">
+            <div class="takeaway-num">02</div>
+            <div>
+                <h4>Tailwind CDN ≠ produkce</h4>
+                <p>CDN je vyvojovy nastroj. Pro produkci extrahujte pouze pouzite tridy.</p>
+            </div>
+        </div>
+        <div class="card takeaway reveal reveal-delay-3">
+            <div class="takeaway-num">03</div>
+            <div>
+                <h4>Testujte na mobilu</h4>
+                <p>Desktop a mobil jsou dva ruzne svety. Throttled 4G ukaze realitu.</p>
+            </div>
+        </div>
+        <div class="card takeaway reveal reveal-delay-4">
+            <div class="takeaway-num">04</div>
+            <div>
+                <h4>Pristupnost je standard</h4>
+                <p>Skip link, focus styly, reduced-motion — ne bonus, ale zaklad.</p>
+            </div>
+        </div>
+        <div class="card takeaway reveal reveal-delay-5">
+            <div class="takeaway-num">05</div>
+            <div>
+                <h4>Pouzivejte nastroje</h4>
+                <p>Lighthouse, WAVE, Validator — automaticke audity vam reknou, co opravit.</p>
+            </div>
+        </div>
+        <div class="card takeaway reveal reveal-delay-5">
+            <div class="takeaway-num">06</div>
+            <div>
+                <h4>Optimalizace není jednorázová</h4>
+                <p>Přidali jsme galerii, produkty i platbu — díky AVIF/WebP, lazy loading a pevným rozměrům zůstalo skóre 98/98.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 13: Q&A -->
+<!-- ============================================================ -->
+<section id="qa">
+    <h2 class="section-title reveal" style="margin-bottom: 2rem;">Otazky?</h2>
+    <div class="flex gap-2 reveal reveal-delay-2">
+        <div class="badge">David</div>
+        <div class="badge">+ kamarad</div>
+    </div>
+    <p class="section-subtitle reveal reveal-delay-3" style="text-align: center; margin-top: 2rem; max-width: 400px;">
+        ITK / SIN — 2026<br>
+        <span style="color: var(--accent);">SmartHome.cz</span>
+    </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+    // === Intersection Observer — trigger reveal animations ===
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+
+                // Animate counters inside this element
+                entry.target.querySelectorAll('[data-count]').forEach(animateCounter);
+                entry.target.querySelectorAll('[data-count-decimal]').forEach(animateDecimalCounter);
+
+                // Animate waterfall bars
+                entry.target.querySelectorAll('.waterfall-bar[data-width]').forEach(bar => {
+                    setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
+                });
+
+                // Animate ring fills
+                entry.target.querySelectorAll('.ring-fill[data-score]').forEach(ring => {
+                    const score = parseInt(ring.dataset.score);
+                    const circumference = 2 * Math.PI * 50; // r=50
+                    const offset = circumference - (score / 100) * circumference;
+                    setTimeout(() => { ring.style.strokeDashoffset = offset; }, 300);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // === Animated number counters ===
+    function animateCounter(el) {
+        if (el.dataset.animated) return;
+        el.dataset.animated = '1';
+        const target = parseInt(el.dataset.count);
+        const duration = 1500;
+        const start = performance.now();
+
+        function update(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4); // ease out quart
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    function animateDecimalCounter(el) {
+        if (el.dataset.animated) return;
+        el.dataset.animated = '1';
+        const target = parseFloat(el.dataset.countDecimal);
+        const duration = 1500;
+        const start = performance.now();
+
+        function update(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4);
+            el.textContent = (eased * target).toFixed(1) + 's';
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    // === Tab switching ===
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.parentElement;
+            group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const tabId = 'tab-' + btn.dataset.tab;
+            const section = btn.closest('section');
+            section.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // === Navigation dots ===
+    const sections = document.querySelectorAll('section');
+    const navDots = document.querySelector('.nav-dots');
+
+    sections.forEach((sec, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'nav-dot';
+        dot.setAttribute('aria-label', 'Sekce ' + (i + 1));
+        dot.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+        navDots.appendChild(dot);
+    });
+
+    const dotObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const idx = Array.from(sections).indexOf(entry.target);
+                document.querySelectorAll('.nav-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === idx);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+
+    sections.forEach(sec => dotObserver.observe(sec));
+</script>
+</body>
+</html>

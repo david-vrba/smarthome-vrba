@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SmartHome.cz – navrhujeme a instalujeme plně automatizované chytré domácnosti. Loxone, Control4, KNX integrace pro váš komfort a bezpečí.">
+    <meta name="theme-color" content="#f1f3f5">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A0%3C/text%3E%3C/svg%3E">
+    <title>Budoucnost bydlení | SmartHome.cz</title>
+
+    <!-- Preload: Hero LCP image (must match actual <img src>) -->
+    <link rel="preload" as="image"
+        href="https://vekaprod-media.e-spirit.cloud/a65a0acb-1c5f-490f-bec7-6d81965b375b/editorial_media/infocenter/aesthetik-fensterdesign-slider_res_4_3_w540.jpg"
+        fetchpriority="high">
+
+    <!-- Preconnect to critical origins -->
+    <link rel="preconnect" href="https://vekaprod-media.e-spirit.cloud">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Fonts: async load to avoid render-blocking -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap"></noscript>
+
+    <!-- GSAP + ScrollTrigger (deferred to unblock render) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <!-- Paper.js: loaded conditionally for desktop only (saves 67KB on mobile) -->
+
+    <style>
+        
+        *, *::before, *::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: #e5e7eb; }
+        html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 4; }
+        body { margin: 0; line-height: inherit; }
+        h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+        p { margin: 0; }
+        a { color: inherit; text-decoration: inherit; }
+        img, svg, canvas { display: block; vertical-align: middle; }
+        img { max-width: 100%; height: auto; }
+        button { font-family: inherit; font-size: 100%; }
+
+        .scroll-smooth { scroll-behavior: smooth; }
+        .antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .fixed { position: fixed; }
+        .flex { display: flex; }
+        .inline-flex { display: inline-flex; }
+        .inline-block { display: inline-block; }
+        .grid { display: grid; }
+        .hidden { display: none; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1 1 0%; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .overflow-hidden { overflow: hidden; }
+        .z-10 { z-index: 10; }
+        .z-20 { z-index: 20; }
+        .z-30 { z-index: 30; }
+        .z-40 { z-index: 40; }
+
+        .top-0 { top: 0; }
+        .left-0 { left: 0; }
+        .right-0 { right: 0; }
+        .top-8 { top: 2rem; }
+        .left-1\/2 { left: 50%; }
+        .top-\[10\%\] { top: 10%; }
+        .top-\[45\%\] { top: 45%; }
+        .bottom-\[5\%\] { bottom: 5%; }
+        .right-\[5\%\] { right: 5%; }
+        .-left-\[15\%\] { left: -15%; }
+
+        .transform, .-translate-x-1\/2, .-translate-y-1\/2, .translate-y-8, .scale-105, .scale-90 {
+            --tw-translate-x: 0; --tw-translate-y: 0; --tw-scale-x: 1; --tw-scale-y: 1;
+            transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+        }
+        .-translate-x-1\/2 { --tw-translate-x: -50%; }
+        .-translate-y-1\/2 { --tw-translate-y: -50%; }
+        .translate-y-8 { --tw-translate-y: 2rem; }
+        .scale-105 { --tw-scale-x: 1.05; --tw-scale-y: 1.05; }
+        .scale-90 { --tw-scale-x: 0.9; --tw-scale-y: 0.9; }
+        .origin-left { transform-origin: left; }
+
+        .w-full { width: 100%; }
+        .w-2 { width: 0.5rem; }
+        .w-4 { width: 1rem; }
+        .w-6 { width: 1.5rem; }
+        .w-8 { width: 2rem; }
+        .w-12 { width: 3rem; }
+        .w-56 { width: 14rem; }
+        .w-60 { width: 15rem; }
+        .w-\[95\%\] { width: 95%; }
+        .w-\[110\%\] { width: 110%; }
+        .h-full { height: 100%; }
+        .h-2 { height: 0.5rem; }
+        .h-4 { height: 1rem; }
+        .h-6 { height: 1.5rem; }
+        .h-8 { height: 2rem; }
+        .h-12 { height: 3rem; }
+        .h-48 { height: 12rem; }
+        .h-64 { height: 16rem; }
+        .h-\[550px\] { height: 550px; }
+        .h-\[600px\] { height: 600px; }
+        .min-h-screen { min-height: 100vh; }
+        .max-w-6xl { max-width: 72rem; }
+        .max-w-7xl { max-width: 80rem; }
+        .max-w-lg { max-width: 32rem; }
+        .max-w-sm { max-width: 24rem; }
+
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+        .pt-6 { padding-top: 1.5rem; }
+        .pt-28 { padding-top: 7rem; }
+        .pb-4 { padding-bottom: 1rem; }
+        .pb-12 { padding-bottom: 3rem; }
+        .pb-16 { padding-bottom: 4rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-12 { margin-top: 3rem; }
+        .mt-24 { margin-top: 6rem; }
+        .mt-auto { margin-top: auto; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .ml-1 { margin-left: 0.25rem; }
+        .ml-2 { margin-left: 0.5rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        .space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-left: 0.5rem; }
+        .space-x-10 > :not([hidden]) ~ :not([hidden]) { margin-left: 2.5rem; }
+        .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 2.5rem; }
+
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-syne { font-family: 'Syne', sans-serif; }
+        .font-mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .text-\[10px\] { font-size: 10px; }
+        .text-\[11px\] { font-size: 11px; }
+        .text-\[3\.5rem\] { font-size: 3.5rem; }
+        .font-light { font-weight: 300; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .leading-\[1\.05\] { line-height: 1.05; }
+        .leading-relaxed { line-height: 1.625; }
+        .leading-tight { line-height: 1.25; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .tracking-tighter { letter-spacing: -0.05em; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .tracking-widest { letter-spacing: 0.1em; }
+        .text-center { text-align: center; }
+        .uppercase { text-transform: uppercase; }
+        .whitespace-pre-wrap { white-space: pre-wrap; }
+        .align-middle { vertical-align: middle; }
+
+        .text-white { color: #ffffff; }
+        .text-metal-50 { color: #f8f9fa; }
+        .text-metal-400 { color: #ced4da; }
+        .text-metal-500 { color: #adb5bd; }
+        .text-metal-600 { color: #868e96; }
+        .text-metal-700 { color: #495057; }
+        .text-metal-800 { color: #343a40; }
+        .text-metal-900 { color: #212529; }
+        .bg-white { background-color: #ffffff; }
+        .bg-white\/40 { background-color: rgba(255, 255, 255, 0.4); }
+        .bg-white\/50 { background-color: rgba(255, 255, 255, 0.5); }
+        .bg-white\/70 { background-color: rgba(255, 255, 255, 0.7); }
+        .bg-metal-100 { background-color: #f1f3f5; }
+        .bg-metal-500 { background-color: #adb5bd; }
+        .bg-metal-800 { background-color: #343a40; }
+        .bg-metal-800\/50 { background-color: rgba(52, 58, 64, 0.5); }
+        .bg-metal-900 { background-color: #212529; }
+        .bg-emerald-500 { background-color: #10b981; }
+
+        .border { border-width: 1px; }
+        .border-b { border-bottom-width: 1px; }
+        .border-t { border-top-width: 1px; }
+        .border-metal-200 { border-color: #e9ecef; }
+        .border-metal-300 { border-color: #dee2e6; }
+        .border-metal-700 { border-color: #495057; }
+        .rounded-full { border-radius: 9999px; }
+        .rounded-\[20px\] { border-radius: 20px; }
+        .rounded-\[2rem\] { border-radius: 2rem; }
+        .rounded-t-\[4rem\] { border-top-left-radius: 4rem; border-top-right-radius: 4rem; }
+
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        .shadow-\[0_-20px_50px_rgba\(33\2c 37\2c 41\2c 0\.2\)\] { box-shadow: 0 -20px 50px rgba(33, 37, 41, 0.2); }
+        .opacity-0 { opacity: 0; }
+        .opacity-70 { opacity: 0.7; }
+        .opacity-90 { opacity: 0.9; }
+        .opacity-100 { opacity: 1; }
+        .object-cover { object-fit: cover; }
+        .backdrop-blur-md { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+
+        .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .duration-700 { transition-duration: 700ms; }
+        .ease-\[cubic-bezier\(0\.34\2c 1\.56\2c 0\.64\2c 1\)\] { transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-pulse { animation: tw-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes tw-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .animate-\[pulse_1\.5s_ease-in-out_infinite\] { animation: tw-pulse 1.5s ease-in-out infinite; }
+
+        .hover\:text-metal-900:hover { color: #212529; }
+        .hover\:text-white:hover { color: #ffffff; }
+
+        @media (min-width: 768px) {
+            .md\:flex { display: flex; }
+            .md\:flex-row { flex-direction: row; }
+            .md\:col-span-2 { grid-column: span 2 / span 2; }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .md\:px-12 { padding-left: 3rem; padding-right: 3rem; }
+            .md\:py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+            .md\:text-5xl { font-size: 3rem; line-height: 1; }
+            .md\:text-7xl { font-size: 4.5rem; line-height: 1; }
+            .md\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+            .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:block { display: block; }
+            .lg\:col-span-5 { grid-column: span 5 / span 5; }
+            .lg\:col-span-7 { grid-column: span 7 / span 7; }
+            .lg\:gap-8 { gap: 2rem; }
+            .lg\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+            .lg\:text-\[5\.5rem\] { font-size: 5.5rem; }
+        }
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --blur: blur(24px);
+        }
+
+        body {
+            background-color: #f1f3f5;
+            color: #212529;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (pointer: fine) {
+            body {
+                cursor: none;
+            }
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        #liquid-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-nav {
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+        }
+
+        .text-gradient-metal {
+            background: linear-gradient(135deg, #495057 0%, #adb5bd 50%, #212529 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .btn-liquid-metal {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 18px 48px;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #212529;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            background: #ffffff;
+            
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                inset 0 1px 2px rgba(255, 255, 255, 1),
+                inset 0 -2px 6px rgba(0, 0, 0, 0.03);
+            border: 1px solid transparent;
+        }
+
+        .btn-liquid-metal::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            border-radius: 9999px;
+            background: conic-gradient(from var(--angle),
+                    #ffffff 0%,
+                    #dee2e6 15%,
+                    #adb5bd 30%,
+                    #495057 45%,
+                    #ffffff 50%,
+                    #dee2e6 65%,
+                    #adb5bd 80%,
+                    #495057 95%,
+                    #ffffff 100%);
+            animation: spin-metallic 4s linear infinite;
+        }
+
+        .btn-liquid-metal::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(241, 243, 245, 0.85));
+            border-radius: 9999px;
+            z-index: -1;
+            
+            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 1), inset 0 -1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes spin-metallic {
+            to {
+                --angle: 360deg;
+            }
+        }
+
+        .btn-content {
+            position: relative;
+            z-index: 10;
+            
+            text-shadow:
+                -0.5px 0px 1px rgba(255, 50, 50, 0.3),
+                0.5px 0px 1px rgba(50, 50, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-liquid-metal:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 15px 30px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.05),
+                inset 0 1px 2px rgba(255, 255, 255, 1);
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #212529;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            will-change: transform;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
+        }
+
+        .custom-cursor.hovering {
+            width: 24px;
+            height: 24px;
+            background-color: #ffffff;
+        }
+
+        .reveal-wrapper {
+            overflow: hidden;
+            display: block;
+        }
+
+        .reveal-text {
+            display: block;
+            transform-origin: 0 100%;
+        }
+
+        .metallic-img {
+            
+            filter: grayscale(85%) contrast(1.15) brightness(1.1);
+            transition: filter 0.8s ease, transform 1s ease;
+        }
+
+        .img-container:hover .metallic-img {
+            filter: grayscale(30%) contrast(1.1) brightness(1.05);
+            transform: scale(1.05);
+        }
+
+        #liquid-canvas {
+            will-change: transform;
+        }
+
+        #features,
+        footer {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
+        }
+
+        /* --- Galerie realizací (responzivní obrázky) --- */
+        #galerie {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 900px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        }
+        .gallery-item { margin: 0; }
+        .gallery-frame {
+            aspect-ratio: 4 / 3;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-frame img { width: 100%; height: 100%; }
+        figcaption {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        #typewriter-cursor { animation: cursor-blink 1s step-end infinite; }
+
+        .cursor-svg-shadow { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-text-enter {
+            animation: fadeSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.75rem 1.5rem;
+            background: #212529;
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0 0 0.5rem 0.5rem;
+            z-index: 10000;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        a:focus-visible, .btn-liquid-metal:focus-visible {
+            outline: 2px solid #495057;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .hero-text-enter {
+                animation: none;
+                opacity: 1;
+            }
+        }
+
+        .gsap-nav {
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        /* --- Responzivní hamburger menu (dle podkladů) --- */
+        .nav-toggle {
+            display: none;               /* na desktopu skryto, zobrazí se < 768px */
+            position: relative;
+            width: 44px;                 /* WCAG: dostatečně velká klikací plocha */
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .nav-toggle-bar,
+        .nav-toggle-bar::before,
+        .nav-toggle-bar::after {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #212529;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+        }
+        .nav-toggle-bar::before { position: absolute; transform: translateY(-7px); }
+        .nav-toggle-bar::after  { position: absolute; transform: translateY(7px); }
+        /* otevřeno -> přesype se do křížku (X) */
+        .nav-toggle.is-active .nav-toggle-bar { background: transparent; }
+        .nav-toggle.is-active .nav-toggle-bar::before { transform: rotate(45deg); }
+        .nav-toggle.is-active .nav-toggle-bar::after  { transform: rotate(-45deg); }
+
+        @media (max-width: 767px) {
+            .nav-toggle { display: inline-flex; }
+            .primary-nav {
+                position: absolute;
+                top: calc(100% + 12px);
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+                padding: 1rem 1.5rem;
+                border-radius: 24px;
+                background: var(--glass-bg);
+                backdrop-filter: var(--blur);
+                -webkit-backdrop-filter: var(--blur);
+                border: 1px solid var(--glass-border);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+            }
+            .primary-nav > a {
+                margin-left: 0;          /* zruší space-x-10 v sloupcovém layoutu */
+                width: 100%;
+                padding: 0.6rem 0;
+            }
+            /* viditelnost ovládá .is-open (přebije utilitu .hidden) */
+            .primary-nav.is-open { display: flex; }
+        }
+
+        /* --- Produkty / Ceník --- */
+        #produkty {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 1000px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            padding: 1.25rem;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+        .product-media {
+            aspect-ratio: 4 / 3;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-media img { width: 100%; height: 100%; object-fit: contain; padding: 8%; }
+        .product-tag {
+            align-self: flex-start;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #868e96;
+            margin-top: 1rem;
+        }
+        .product-price-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+        .product-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: #212529; white-space: nowrap; }
+        .product-price small { font-size: 0.7rem; font-weight: 500; color: #868e96; display: block; letter-spacing: 0.05em; }
+        .btn-order {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            background: #212529;
+            border: none;
+            border-radius: 9999px;
+            padding: 0.7rem 1.4rem;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.25s ease;
+            white-space: nowrap;
+        }
+        .btn-order:hover { background: #495057; transform: scale(1.04); }
+
+        /* --- Payment wall (modal) --- */
+        .paywall {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(33, 37, 41, 0.55);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .paywall.is-open { display: flex; opacity: 1; }
+        .paywall-card {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            max-height: 92vh;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.92);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 28px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            transform: translateY(16px) scale(0.98);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .paywall.is-open .paywall-card { transform: translateY(0) scale(1); }
+        .paywall-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            border: 1px solid #e9ecef;
+            background: #ffffff;
+            color: #495057;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .paywall-close:hover { background: #f1f3f5; color: #212529; }
+        .paywall-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+            color: #868e96; margin-bottom: 0.75rem;
+        }
+        .paywall-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.02em; color: #212529; margin-bottom: 1.25rem; }
+        .paywall-summary {
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            padding: 1rem; border-radius: 16px; background: #f1f3f5; border: 1px solid #e9ecef; margin-bottom: 1.5rem;
+        }
+        .paywall-summary .ps-name { font-weight: 600; color: #343a40; font-size: 0.9rem; }
+        .paywall-summary .ps-note { font-size: 0.72rem; color: #868e96; margin-top: 2px; }
+        .paywall-summary .ps-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #212529; white-space: nowrap; }
+        .pay-field { margin-bottom: 1rem; }
+        .pay-field label { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #868e96; margin-bottom: 0.4rem; }
+        .pay-field input {
+            width: 100%; padding: 0.8rem 1rem; font-size: 0.95rem; font-family: 'Inter', sans-serif; color: #212529;
+            background: #ffffff; border: 1px solid #dee2e6; border-radius: 12px; cursor: text; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .pay-field input:focus { outline: none; border-color: #adb5bd; box-shadow: 0 0 0 3px rgba(173, 181, 189, 0.25); }
+        .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .pay-submit {
+            width: 100%; margin-top: 0.5rem; padding: 1rem; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 0.08em; color: #ffffff; background: #212529; border: none; border-radius: 9999px; cursor: pointer;
+            transition: background 0.25s ease, transform 0.2s ease;
+        }
+        .pay-submit:hover { background: #495057; transform: translateY(-2px); }
+        .pay-submit:disabled { opacity: 0.7; cursor: default; transform: none; }
+        .pay-secure { display: flex; align-items: center; justify-content: center; gap: 0.4rem; font-size: 0.72rem; color: #868e96; margin-top: 1rem; }
+        .pay-success { text-align: center; padding: 1rem 0; }
+        .pay-success svg { margin: 0 auto 1rem; }
+        /* restore pointer/text cursor inside modal (body uses cursor:none on desktop) */
+        .paywall, .paywall * { cursor: auto; }
+        .paywall input { cursor: text; }
+        .paywall button, .paywall .pay-submit { cursor: pointer; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .paywall, .paywall-card, .product-card { transition: none; }
+        }
+    </style>
+</head>
+
+<body class="font-inter antialiased">
+
+    <!-- Skip to content link for keyboard users (WCAG 2.1 AA) -->
+    <a href="#main-content" class="skip-link">Přeskočit na obsah</a>
+
+    <!-- Epic Visual Backgrounds -->
+    <div class="noise-overlay"></div>
+    <canvas id="liquid-canvas"></canvas>
+
+    <!-- Custom Cursor Target -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- 3. UI Elements: Floating Glassmorphism Nav (responzivní — hamburger pod 768px) -->
+    <nav aria-label="Hlavní navigace"
+        class="fixed top-8 left-1/2 transform -translate-x-1/2 w-[95%] max-w-6xl rounded-full glass-nav z-40 px-8 py-4 flex justify-between items-center opacity-0 gsap-nav">
+        <div class="text-2xl font-syne font-extrabold tracking-tighter text-metal-900 cursor-hover">
+            SMART<span class="text-metal-500">HOME</span>
+        </div>
+
+        <!-- Hamburger (jen mobil, < 768px) -->
+        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"
+            aria-label="Otevřít menu">
+            <span class="nav-toggle-bar"></span>
+        </button>
+
+        <!-- Navigační odkazy (desktop: řádek; mobil: rozbalovací glass panel) -->
+        <div id="primary-nav"
+            class="primary-nav hidden md:flex items-center space-x-10 text-sm font-medium text-metal-700">
+            <a href="#galerie" class="hover:text-metal-900 transition-colors cursor-hover">Galerie</a>
+            <a href="#produkty" class="hover:text-metal-900 transition-colors cursor-hover">Produkty</a>
+            <a href="#systemy" class="hover:text-metal-900 transition-colors cursor-hover">Systémy</a>
+            <a href="#integrace" class="hover:text-metal-900 transition-colors cursor-hover">Integrace</a>
+            <a href="#zaruka" class="hover:text-metal-900 transition-colors cursor-hover">Záruka</a>
+            <a href="o-mne.html" class="hover:text-metal-900 transition-colors cursor-hover">O zakladateli</a>
+            <a href="#kontakt"
+                class="hover:text-metal-900 uppercase tracking-widest font-semibold transition-colors cursor-hover">Kontakt</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main id="main-content" class="relative min-h-screen flex items-center justify-center z-10 pt-28 pb-16 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+            <!-- Structural Typography & Text -->
+            <div class="lg:col-span-7 flex flex-col items-start space-y-10 parallax-el" data-speed="0.04">
+
+                <div
+                    class="inline-flex items-center space-x-2 px-5 py-2 rounded-full border border-metal-300 bg-white/40 backdrop-blur-md text-xs font-semibold text-metal-800 tracking-widest uppercase opacity-0 gsap-fade">
+                    <span class="w-2 h-2 rounded-full bg-metal-800 animate-pulse"></span>
+                    <span>Architektura chytrého bydlení</span>
+                </div>
+
+                <!-- 4. Epic Animations: Staggered Text Mask Reveals -->
+                <h1
+                    class="font-syne text-[3.5rem] leading-[1.05] md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tighter text-metal-900 w-full">
+                    <span class="reveal-wrapper">
+                        <span class="reveal-text text-gradient-metal">SMART</span>
+                    </span>
+                    <span class="reveal-wrapper">
+                        <span class="reveal-text">HOME</span>
+                    </span>
+                    <span class="reveal-wrapper">
+                        <span class="reveal-text text-metal-500">BYDLENÍ</span>
+                    </span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-metal-600 max-w-lg font-light leading-relaxed hero-text-enter">
+                    Navrhujeme a&nbsp;instalujeme plně automatizované chytré domácnosti pro náročné klienty. Spojujeme
+                    špičkovou technologii s&nbsp;dokonalým designem pro vaše bezpečí, komfort a&nbsp;úsporu času.
+                </p>
+
+                <div class="pt-6 opacity-0 gsap-fade">
+                    <a href="#konzultace" class="btn-liquid-metal" data-checkout data-mode="consult"
+                        data-item="Nezávazná konzultace" data-price="500&nbsp;Kč"
+                        data-note="Rezervační poplatek – odečteme z&nbsp;ceny realizace">
+                        <span class="btn-content">Konzultace</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Asymmetrical Parallax Imagery -->
+            <div class="lg:col-span-5 relative h-[600px] w-full parallax-el hidden lg:block" data-speed="-0.02">
+
+                <!-- Main Asymmetrical Glass Card -->
+                <div
+                    class="absolute top-[45%] right-0 transform -translate-y-1/2 w-[110%] h-[550px] glass-card overflow-hidden p-3 opacity-0 gsap-img z-10">
+                    <div class="w-full h-full rounded-[20px] overflow-hidden relative img-container">
+                        <!-- Fluid Architecture / Chrome Objects Unsplash "https://vekaprod-media.e-spirit.cloud/a65a0acb-1c5f-490f-bec7-6d81965b375b/editorial_media/infocenter/aesthetik-fensterdesign-slider_res_4_3_w540.jpg" -->
+                        <img src="https://vekaprod-media.e-spirit.cloud/a65a0acb-1c5f-490f-bec7-6d81965b375b/editorial_media/infocenter/aesthetik-fensterdesign-slider_res_4_3_w540.jpg"
+                            alt="Fluid Architecture Smart Home" width="540" height="405" loading="eager"
+                            fetchpriority="high" decoding="sync"
+                            class="w-full h-full object-cover metallic-img scale-105" id="hero-parallax-img">
+                    </div>
+                </div>
+
+                <!-- Floating Info Widget 1 -->
+                <div class="absolute top-[10%] -left-[15%] w-56 glass-card p-6 opacity-0 gsap-widget float-slow parallax-el z-20"
+                    data-speed="0.06">
+                    <div class="w-12 h-12 rounded-full bg-metal-100 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-metal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="font-syne font-bold tracking-tight text-metal-900 text-xl">Non-stop dohled</div>
+                    <p class="text-xs text-metal-600 mt-2 font-inter leading-relaxed">Garantujeme absolutní spolehlivost
+                        sítě a&nbsp;proaktivní servis 24/7.</p>
+                </div>
+
+                <!-- Floating Info Widget 2 -->
+                <div class="absolute bottom-[5%] right-[5%] w-60 glass-card p-6 opacity-0 gsap-widget float-medium parallax-el z-20"
+                    data-speed="0.08">
+                    <div class="w-12 h-12 rounded-full bg-metal-100 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-metal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="font-syne font-bold tracking-tight text-metal-900 text-xl">Prémiové technologie</div>
+                    <p class="text-xs text-metal-600 mt-2 font-inter leading-relaxed">Bezproblémová integrace systémů
+                        Loxone, Control4 a&nbsp;KNX.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 5. Galerie realizací — responzivní, optimalizované obrázky (AVIF/WebP, srcset/sizes, lazy) -->
+    <section id="galerie" class="py-24 px-6 md:px-12 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl md:text-5xl font-syne font-extrabold mb-4 tracking-tighter uppercase text-metal-900">
+            Galerie realizací</h2>
+        <p class="text-lg text-metal-600 max-w-lg font-light leading-relaxed mb-16">
+            Ukázky našich instalací – intuitivní ovládání, design a&nbsp;propojené technologie v&nbsp;reálných domácnostech.</p>
+
+        <div class="gallery-grid">
+            <!-- 1 -->
+            <figure class="gallery-item glass-card overflow-hidden p-3">
+                <div class="gallery-frame img-container">
+                    <picture>
+                        <source type="image/avif"
+                            srcset="img/g1-400.avif 400w, img/g1-800.avif 800w, img/g1-1200.avif 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <source type="image/webp"
+                            srcset="img/g1-400.webp 400w, img/g1-800.webp 800w, img/g1-1200.webp 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <img src="img/g1-800.webp" alt="Centrální ovládání chytré domácnosti na dotykovém tabletu v obývacím pokoji"
+                            width="1200" height="900" loading="lazy" decoding="async"
+                            class="object-cover metallic-img">
+                    </picture>
+                </div>
+                <figcaption>Centrální ovládání domácnosti na dotykovém panelu</figcaption>
+            </figure>
+
+            <!-- 2 -->
+            <figure class="gallery-item glass-card overflow-hidden p-3">
+                <div class="gallery-frame img-container">
+                    <picture>
+                        <source type="image/avif"
+                            srcset="img/g2-400.avif 400w, img/g2-800.avif 800w, img/g2-1200.avif 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <source type="image/webp"
+                            srcset="img/g2-400.webp 400w, img/g2-800.webp 800w, img/g2-1200.webp 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <img src="img/g2-800.webp" alt="Vizualizace propojených systémů chytrého domu – osvětlení, klima, kamery a zabezpečení"
+                            width="1200" height="900" loading="lazy" decoding="async"
+                            class="object-cover metallic-img">
+                    </picture>
+                </div>
+                <figcaption>Propojené systémy: osvětlení, klima, kamery i&nbsp;zabezpečení</figcaption>
+            </figure>
+
+            <!-- 3 -->
+            <figure class="gallery-item glass-card overflow-hidden p-3">
+                <div class="gallery-frame img-container">
+                    <picture>
+                        <source type="image/avif"
+                            srcset="img/g3-400.avif 400w, img/g3-800.avif 800w, img/g3-1200.avif 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <source type="image/webp"
+                            srcset="img/g3-400.webp 400w, img/g3-800.webp 800w, img/g3-1200.webp 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <img src="img/g3-800.webp" alt="Chytrá domácnost ovládaná přes mobilní telefon"
+                            width="1200" height="900" loading="lazy" decoding="async"
+                            class="object-cover metallic-img">
+                    </picture>
+                </div>
+                <figcaption>Vše po ruce – ovládání přes mobilní aplikaci</figcaption>
+            </figure>
+
+            <!-- 4 -->
+            <figure class="gallery-item glass-card overflow-hidden p-3">
+                <div class="gallery-frame img-container">
+                    <picture>
+                        <source type="image/avif"
+                            srcset="img/g4-400.avif 400w, img/g4-800.avif 800w, img/g4-1200.avif 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <source type="image/webp"
+                            srcset="img/g4-400.webp 400w, img/g4-800.webp 800w, img/g4-1200.webp 1200w"
+                            sizes="(min-width: 1152px) 540px, (min-width: 768px) 46vw, calc(100vw - 3rem)">
+                        <img src="img/g4-800.webp" alt="Mobilní aplikace pro ovládání chytré kuchyně a spotřebičů"
+                            width="1200" height="900" loading="lazy" decoding="async"
+                            class="object-cover metallic-img">
+                    </picture>
+                </div>
+                <figcaption>Chytrá kuchyně a&nbsp;spotřebiče pod kontrolou</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- 6. Features Section (Interactive Functional Artifacts) -->
+    <section id="features" class="py-24 px-6 md:px-12 max-w-6xl mx-auto border-t border-metal-200 mt-12 relative z-10">
+        <h2 class="text-4xl md:text-5xl font-syne font-extrabold mb-16 tracking-tighter uppercase text-metal-900">
+            Inteligentní Ekosystém</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Card 1: Diagnostic Shuffler -->
+            <div class="feature-card flex flex-col gap-6 opacity-0 translate-y-8">
+                <div class="h-64 relative glass-card p-4 flex items-center justify-center overflow-hidden">
+                    <div class="relative w-full h-48 mt-4" id="shuffler-container">
+                        <!-- Cards injected via JS -->
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-syne font-bold text-2xl mb-2 tracking-tight text-metal-900">Okamžitý komfort</h3>
+                    <p class="font-inter text-metal-600 text-sm">Okamžité spuštění domovní automatizace
+                        s&nbsp;přednastavenými scénáři.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Telemetry Typewriter -->
+            <div class="feature-card flex flex-col gap-6 opacity-0 translate-y-8">
+                <div
+                    class="h-64 glass-card p-6 flex flex-col font-inter text-xs md:text-sm text-metal-800 relative z-20 overflow-hidden">
+                    <div class="flex items-center gap-2 mb-4 border-b border-metal-300 pb-4">
+                        <div class="w-2 h-2 rounded-full bg-metal-800 animate-pulse"></div>
+                        <span class="opacity-70 uppercase tracking-widest font-semibold text-[10px]">Živý Přenos //
+                            Telemetrie</span>
+                    </div>
+                    <div class="flex-1 whitespace-pre-wrap leading-relaxed opacity-90 font-mono text-[11px]"
+                        id="typewriter-text">
+                        <span id="typewriter-content"></span><span id="typewriter-cursor"
+                            class="inline-block w-2 h-4 align-middle bg-metal-500 ml-1">&nbsp;</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-syne font-bold text-2xl mb-2 tracking-tight text-metal-900">Maximální úspora energií
+                    </h3>
+                    <p class="font-inter text-metal-600 text-sm">Snížení nákladů až o&nbsp;40&nbsp;% pomocí AI, která inteligentně
+                        řídí vytápění, chlazení a&nbsp;spotřebu energie.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Cursor Scheduler -->
+            <div class="feature-card flex flex-col gap-6 opacity-0 translate-y-8">
+                <div class="h-64 relative glass-card p-6 flex flex-col items-center overflow-hidden"
+                    id="cursor-scheduler-container">
+                    <div class="w-full flex justify-between mb-8 z-20">
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-0">P</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-1">Ú</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-2">S</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-ct">Č</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-4">P</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-5">S</div>
+                        <div class="day-cell w-8 h-8 rounded-full flex items-center justify-center font-inter font-semibold text-xs border border-metal-300 transition-colors text-metal-800 bg-white/50"
+                            id="day-6">N</div>
+                    </div>
+                    <div
+                        class="save-btn relative z-20 bg-white border border-metal-200 text-metal-900 px-6 py-3 rounded-full text-sm font-syne font-bold mt-auto w-full text-center transition-colors shadow-sm cursor-hover">
+                        Historie událostí domácnosti
+                    </div>
+
+                    <!-- Animated Cursor SVG -->
+                    <svg class="cursor-svg cursor-svg-shadow absolute top-0 left-0 w-8 h-8 z-30 opacity-0" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4L9.5 21L13.5 13.5L21 9.5L4 4Z" fill="#212529" stroke="#ffffff" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-syne font-bold text-2xl mb-2 tracking-tight text-metal-900">Absolutní zabezpečení
+                    </h3>
+                    <p class="font-inter text-metal-600 text-sm">Spolehlivý certifikovaný partner pro komplexní
+                        integraci bezpečnostních systémů a&nbsp;kamer.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. Produkty / Ceník — reálné produkty, ceny a vstup do objednávky (payment wall) -->
+    <section id="produkty" class="py-24 px-6 md:px-12 max-w-6xl mx-auto border-t border-metal-200 relative z-10">
+        <h2 class="text-4xl md:text-5xl font-syne font-extrabold mb-4 tracking-tighter uppercase text-metal-900">
+            Produkty &amp; ceník</h2>
+        <p class="text-lg text-metal-600 max-w-lg font-light leading-relaxed mb-16">
+            Vybrané komponenty, které u&nbsp;realizací nejčastěji nasazujeme. Ceny jsou orientační, včetně DPH.</p>
+
+        <div class="products-grid">
+            <!-- 1: tado termostat -->
+            <article class="product-card glass-card">
+                <div class="product-media">
+                    <picture>
+                        <source type="image/avif" srcset="img/p2-240.avif 240w, img/p2-423.avif 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <source type="image/webp" srcset="img/p2-240.webp 240w, img/p2-423.webp 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <img src="img/p2-423.webp" alt="tado Chytrý termostat V3+ s dotykovým displejem" width="423"
+                            height="318" loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <span class="product-tag">Vytápění</span>
+                <h3 class="font-syne font-bold text-xl tracking-tight text-metal-900 mt-1">tado Chytrý termostat V3+</h3>
+                <p class="font-inter text-metal-600 text-sm mt-2">Chytré řízení vytápění s&nbsp;geofencingem, plánováním
+                    a&nbsp;ovládáním přes aplikaci odkudkoliv.</p>
+                <div class="product-price-row">
+                    <div class="product-price">2&nbsp;490&nbsp;Kč<small>vč. DPH</small></div>
+                    <button class="btn-order cursor-hover" data-checkout data-item="tado Chytrý termostat V3+"
+                        data-price="2&nbsp;490&nbsp;Kč" data-note="Chytré řízení vytápění">Objednat</button>
+                </div>
+            </article>
+
+            <!-- 2: tado Internet Bridge -->
+            <article class="product-card glass-card">
+                <div class="product-media">
+                    <picture>
+                        <source type="image/avif" srcset="img/p5-240.avif 240w, img/p5-423.avif 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <source type="image/webp" srcset="img/p5-240.webp 240w, img/p5-423.webp 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <img src="img/p5-423.webp" alt="tado Internet Bridge pro připojení k internetu" width="423"
+                            height="318" loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <span class="product-tag">Připojení</span>
+                <h3 class="font-syne font-bold text-xl tracking-tight text-metal-900 mt-1">tado Internet Bridge</h3>
+                <p class="font-inter text-metal-600 text-sm mt-2">Připojuje zařízení tado k&nbsp;internetu pro vzdálené
+                    ovládání a&nbsp;aktualizace. Jeden na domácnost.</p>
+                <div class="product-price-row">
+                    <div class="product-price">1&nbsp;190&nbsp;Kč<small>vč. DPH</small></div>
+                    <button class="btn-order cursor-hover" data-checkout data-item="tado Internet Bridge"
+                        data-price="1&nbsp;190&nbsp;Kč" data-note="Připojení tado k&nbsp;internetu">Objednat</button>
+                </div>
+            </article>
+
+            <!-- 3: RainPoint gateway -->
+            <article class="product-card glass-card">
+                <div class="product-media">
+                    <picture>
+                        <source type="image/avif" srcset="img/p1-240.avif 240w, img/p1-423.avif 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <source type="image/webp" srcset="img/p1-240.webp 240w, img/p1-423.webp 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <img src="img/p1-423.webp" alt="RainPoint Wi-Fi Smart Gateway – brána pro venkovní senzory"
+                            width="423" height="318" loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <span class="product-tag">Venkovní / zahrada</span>
+                <h3 class="font-syne font-bold text-xl tracking-tight text-metal-900 mt-1">RainPoint Wi-Fi Smart Gateway</h3>
+                <p class="font-inter text-metal-600 text-sm mt-2">Brána pro venkovní a&nbsp;zahradní senzory – počasí, vlhkost
+                    půdy a&nbsp;automatické zavlažování.</p>
+                <div class="product-price-row">
+                    <div class="product-price">990&nbsp;Kč<small>vč. DPH</small></div>
+                    <button class="btn-order cursor-hover" data-checkout data-item="RainPoint Wi-Fi Smart Gateway"
+                        data-price="990&nbsp;Kč" data-note="Brána pro venkovní senzory">Objednat</button>
+                </div>
+            </article>
+
+            <!-- 4: MINIX Z100 kompaktní -->
+            <article class="product-card glass-card">
+                <div class="product-media">
+                    <picture>
+                        <source type="image/avif" srcset="img/p4-240.avif 240w, img/p4-423.avif 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <source type="image/webp" srcset="img/p4-240.webp 240w, img/p4-423.webp 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <img src="img/p4-423.webp" alt="MINIX Z100-0dB kompaktní bezventilátorový mini PC" width="423"
+                            height="318" loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <span class="product-tag">Automatizační server</span>
+                <h3 class="font-syne font-bold text-xl tracking-tight text-metal-900 mt-1">MINIX Z100-0dB Mini PC</h3>
+                <p class="font-inter text-metal-600 text-sm mt-2">Tichý bezventilátorový mini počítač jako centrální
+                    server domácí automatizace (Intel N100).</p>
+                <div class="product-price-row">
+                    <div class="product-price">6&nbsp;990&nbsp;Kč<small>vč. DPH</small></div>
+                    <button class="btn-order cursor-hover" data-checkout data-item="MINIX Z100-0dB Mini PC"
+                        data-price="6&nbsp;990&nbsp;Kč" data-note="Centrální automatizační server">Objednat</button>
+                </div>
+            </article>
+
+            <!-- 5: MINIX Wi-Fi 6 server -->
+            <article class="product-card glass-card">
+                <div class="product-media">
+                    <picture>
+                        <source type="image/avif" srcset="img/p3-240.avif 240w, img/p3-423.avif 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <source type="image/webp" srcset="img/p3-240.webp 240w, img/p3-423.webp 423w"
+                            sizes="(min-width: 1024px) 320px, (min-width: 640px) 44vw, 88vw">
+                        <img src="img/p3-423.webp" alt="MINIX bezventilátorový mini PC s Wi-Fi 6 a dvěma anténami"
+                            width="423" height="318" loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <span class="product-tag">Server Pro</span>
+                <h3 class="font-syne font-bold text-xl tracking-tight text-metal-900 mt-1">MINIX Mini PC Wi-Fi 6</h3>
+                <p class="font-inter text-metal-600 text-sm mt-2">Výkonný bezventilátorový server s&nbsp;Wi-Fi 6 a&nbsp;dvěma
+                    anténami pro velké instalace a&nbsp;více zón.</p>
+                <div class="product-price-row">
+                    <div class="product-price">9&nbsp;490&nbsp;Kč<small>vč. DPH</small></div>
+                    <button class="btn-order cursor-hover" data-checkout data-item="MINIX Mini PC Wi-Fi 6"
+                        data-price="9&nbsp;490&nbsp;Kč" data-note="Výkonný domácí server">Objednat</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+        class="bg-metal-900 text-metal-50 px-6 md:px-12 py-16 md:py-24 rounded-t-[4rem] relative z-40 mt-24 shadow-[0_-20px_50px_rgba(33,37,41,0.2)]">
+        <div
+            class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-metal-700 pb-12 mb-12 mt-8">
+            <div class="md:col-span-2">
+                <div class="font-syne font-extrabold text-3xl tracking-tighter mb-4 text-white">SMART<span
+                        class="text-metal-500">HOME</span></div>
+                <p class="text-metal-400 max-w-sm mb-8 font-inter font-light text-lg">Navrhujeme a&nbsp;instalujeme plně
+                    automatizované chytré domácnosti pro náročné klienty.</p>
+                <!-- Reuse liquid metal button downscaled slightly for footer -->
+                <a href="#konzultace"
+                    class="btn-liquid-metal cursor-hover inline-flex items-center gap-2 transform scale-90 origin-left"
+                    data-checkout data-mode="consult" data-item="Nezávazná poptávka" data-price="500&nbsp;Kč"
+                    data-note="Rezervační poplatek – odečteme z&nbsp;ceny realizace">
+                    <span class="btn-content">Nezávazná poptávka</span>
+                    <svg class="w-4 h-4 ml-2 text-metal-900 relative z-10" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="flex flex-col gap-4 text-sm font-inter text-metal-400">
+                <div class="text-white font-syne font-bold mb-2 tracking-tighter uppercase">Navigace</div>
+                <a href="#systemy" class="hover:text-white transition-colors cursor-hover">Systémy</a>
+                <a href="#integrace" class="hover:text-white transition-colors cursor-hover">Integrace</a>
+                <a href="#zaruka" class="hover:text-white transition-colors cursor-hover">Záruka a&nbsp;servis</a>
+                <a href="#kontakt" class="hover:text-white transition-colors cursor-hover">Kontakt</a>
+            </div>
+
+            <div class="flex flex-col gap-4 text-sm font-inter text-metal-400">
+                <div class="text-white font-syne font-bold mb-2 tracking-tighter uppercase">Právní</div>
+                <a href="#" class="hover:text-white transition-colors cursor-hover">Ochrana soukromí</a>
+                <a href="#" class="hover:text-white transition-colors cursor-hover">Obchodní podmínky</a>
+                <a href="#" class="hover:text-white transition-colors cursor-hover">Nastavení Cookies</a>
+                <a href="#" class="hover:text-white transition-colors cursor-hover">Compliance</a>
+            </div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-xs text-metal-500">
+            <div>&copy;&nbsp;<span id="copyright-year">2026</span> SmartHome.cz. Všechna práva vyhrazena.
+            </div>
+            <div
+                class="flex items-center gap-2 border border-metal-700 bg-metal-800/50 px-4 py-2 rounded-full font-bold tracking-wider">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+                SYSTÉM AKTIVNÍ
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment wall (modal) — otevírá se z CTA „Konzultace“, „Nezávazná poptávka“ a tlačítek „Objednat“ -->
+    <div class="paywall" id="paywall" role="dialog" aria-modal="true" aria-labelledby="paywall-title" aria-hidden="true">
+        <div class="paywall-card" role="document">
+            <button class="paywall-close" id="paywall-close" type="button" aria-label="Zavřít">&times;</button>
+
+            <div id="paywall-form-view">
+                <span class="paywall-eyebrow">
+                    <span class="w-2 h-2 rounded-full bg-metal-800"></span>
+                    <span id="paywall-eyebrow-text">Dokončení objednávky</span>
+                </span>
+                <h2 class="paywall-title" id="paywall-title">Zabezpečená platba</h2>
+
+                <div class="paywall-summary">
+                    <div>
+                        <div class="ps-name" id="ps-name">Položka</div>
+                        <div class="ps-note" id="ps-note">Popis</div>
+                    </div>
+                    <div class="ps-price" id="ps-price">0&nbsp;Kč</div>
+                </div>
+
+                <form id="paywall-form" novalidate>
+                    <div class="pay-field">
+                        <label for="pf-name">Jméno a&nbsp;příjmení</label>
+                        <input id="pf-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" required>
+                    </div>
+                    <div class="pay-field">
+                        <label for="pf-email">E-mail</label>
+                        <input id="pf-email" name="email" type="email" autocomplete="email" placeholder="jan@example.cz" required>
+                    </div>
+                    <div class="pay-field">
+                        <label for="pf-card">Číslo karty</label>
+                        <input id="pf-card" name="card" type="text" inputmode="numeric" autocomplete="cc-number"
+                            placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+                    <div class="pay-row">
+                        <div class="pay-field">
+                            <label for="pf-exp">Platnost</label>
+                            <input id="pf-exp" name="exp" type="text" inputmode="numeric" autocomplete="cc-exp"
+                                placeholder="MM/RR" maxlength="5" required>
+                        </div>
+                        <div class="pay-field">
+                            <label for="pf-cvc">CVC</label>
+                            <input id="pf-cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc"
+                                placeholder="123" maxlength="4" required>
+                        </div>
+                    </div>
+                    <button class="pay-submit" type="submit" id="pay-submit-btn">Zaplatit <span id="pay-amount">0&nbsp;Kč</span></button>
+                    <div class="pay-secure">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            aria-hidden="true">
+                            <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                            <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                        </svg>
+                        Zabezpečená platba &middot; šifrováno SSL
+                    </div>
+                </form>
+            </div>
+
+            <!-- Úspěšný stav (po odeslání) -->
+            <div id="paywall-success-view" class="pay-success" hidden>
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                    <path d="M22 4L12 14.01l-3-3"></path>
+                </svg>
+                <h2 class="paywall-title" style="margin-bottom:0.5rem">Hotovo!</h2>
+                <p class="font-inter text-metal-600 text-sm" id="paywall-success-text">Platba proběhla úspěšně.</p>
+                <button class="pay-submit" type="button" id="paywall-done-btn" style="margin-top:1.5rem">Zavřít</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Responzivní hamburger menu (běží ihned, nezávisí na GSAP) ---
+        (function () {
+            const navToggle = document.getElementById('nav-toggle');
+            const primaryNav = document.getElementById('primary-nav');
+            if (!navToggle || !primaryNav) return;
+            const close = () => {
+                primaryNav.classList.remove('is-open');
+                navToggle.classList.remove('is-active');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Otevřít menu');
+            };
+            navToggle.addEventListener('click', () => {
+                const open = primaryNav.classList.toggle('is-open');
+                navToggle.classList.toggle('is-active', open);
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                navToggle.setAttribute('aria-label', open ? 'Zavřít menu' : 'Otevřít menu');
+            });
+            // klik na odkaz menu zavře (mobil)
+            primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+        })();
+
+        // --- Payment wall (modal) — otevírá se z CTA a tlačítek „Objednat“ (běží ihned) ---
+        (function () {
+            const paywall = document.getElementById('paywall');
+            if (!paywall) return;
+            const card = paywall.querySelector('.paywall-card');
+            const formView = document.getElementById('paywall-form-view');
+            const successView = document.getElementById('paywall-success-view');
+            const form = document.getElementById('paywall-form');
+            const psName = document.getElementById('ps-name');
+            const psNote = document.getElementById('ps-note');
+            const psPrice = document.getElementById('ps-price');
+            const eyebrow = document.getElementById('paywall-eyebrow-text');
+            const successText = document.getElementById('paywall-success-text');
+            const submitBtn = document.getElementById('pay-submit-btn');
+            const doneBtn = document.getElementById('paywall-done-btn');
+            const closeBtn = document.getElementById('paywall-close');
+            let lastFocused = null, currentMode = 'order';
+
+            function openPaywall(data) {
+                currentMode = data.mode === 'consult' ? 'consult' : 'order';
+                psName.textContent = data.item || 'Položka';
+                psNote.textContent = data.note || '';
+                psPrice.textContent = data.price || '';
+                eyebrow.textContent = currentMode === 'consult' ? 'Rezervace konzultace' : 'Dokončení objednávky';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Zaplatit ' + (data.price || '');
+                successView.hidden = true;
+                formView.hidden = false;
+                form.reset();
+                lastFocused = document.activeElement;
+                paywall.classList.add('is-open');
+                paywall.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                setTimeout(function () { const f = document.getElementById('pf-name'); if (f) f.focus(); }, 60);
+            }
+            function closePaywall() {
+                paywall.classList.remove('is-open');
+                paywall.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lastFocused && lastFocused.focus) lastFocused.focus();
+            }
+
+            document.querySelectorAll('[data-checkout]').forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openPaywall({
+                        mode: el.getAttribute('data-mode'),
+                        item: el.getAttribute('data-item'),
+                        price: el.getAttribute('data-price'),
+                        note: el.getAttribute('data-note')
+                    });
+                });
+            });
+            closeBtn.addEventListener('click', closePaywall);
+            doneBtn.addEventListener('click', closePaywall);
+            paywall.addEventListener('click', function (e) { if (e.target === paywall) closePaywall(); });
+            paywall.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { closePaywall(); return; }
+                if (e.key === 'Tab') {
+                    const nodes = card.querySelectorAll('button, input, [href]');
+                    const vis = Array.prototype.filter.call(nodes, function (f) { return f.offsetParent !== null && !f.disabled; });
+                    if (!vis.length) return;
+                    const first = vis[0], last = vis[vis.length - 1];
+                    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            });
+
+            // formátování polí karty
+            const cardInput = document.getElementById('pf-card');
+            cardInput.addEventListener('input', function () {
+                const v = cardInput.value.replace(/\D/g, '').slice(0, 16);
+                cardInput.value = v.replace(/(.{4})(?=.)/g, '$1 ');
+            });
+            const expInput = document.getElementById('pf-exp');
+            expInput.addEventListener('input', function () {
+                let v = expInput.value.replace(/\D/g, '').slice(0, 4);
+                if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+                expInput.value = v;
+            });
+            const cvcInput = document.getElementById('pf-cvc');
+            cvcInput.addEventListener('input', function () { cvcInput.value = cvcInput.value.replace(/\D/g, '').slice(0, 4); });
+
+            // odeslání → simulace platby → úspěch
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (!form.checkValidity()) { form.reportValidity(); return; }
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Zpracování…';
+                setTimeout(function () {
+                    formView.hidden = true;
+                    successView.hidden = false;
+                    successText.textContent = currentMode === 'consult'
+                        ? 'Konzultace je rezervována. Ozveme se vám do 24 hodin na zadaný e-mail.'
+                        : 'Objednávka přijata. Potvrzení jsme odeslali na váš e-mail.';
+                    doneBtn.focus();
+                }, 1200);
+            });
+        })();
+
+        // --- Combined mousemove handler (rAF-debounced for INP) ---
+        const cursorEl = document.getElementById('cursor');
+        const hovers = document.querySelectorAll('.cursor-hover');
+        const pElements = document.querySelectorAll('.parallax-el');
+        const heroImg = document.getElementById('hero-parallax-img');
+
+        let mouseX = 0, mouseY = 0, rafScheduled = false;
+
+        function onMouseFrame() {
+            rafScheduled = false;
+
+            // Cursor
+            gsap.to(cursorEl, { x: mouseX, y: mouseY, duration: 0.15, ease: "power2.out" });
+
+            // Parallax
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const moveX = mouseX - centerX;
+            const moveY = mouseY - centerY;
+
+            pElements.forEach(el => {
+                const s = parseFloat(el.getAttribute('data-speed'));
+                gsap.to(el, { x: moveX * s, y: moveY * s, duration: 1.2, ease: "power2.out" });
+            });
+
+            if (heroImg) {
+                gsap.to(heroImg, { x: -moveX * 0.03, y: -moveY * 0.03, duration: 1.5, ease: "power2.out" });
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!rafScheduled) {
+                rafScheduled = true;
+                requestAnimationFrame(onMouseFrame);
+            }
+        });
+
+        hovers.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorEl.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursorEl.classList.remove('hovering'));
+        });
+
+        // --- 4. Epic Animations (GSAP Start) ---
+        window.addEventListener('load', () => {
+            gsap.registerPlugin(ScrollTrigger);
+            const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+            // Entrance NavBar
+            tl.to('.gsap-nav', { y: 0, opacity: 1, duration: 1.5, top: "2rem" }, 0.2);
+
+            // Staggered Skewed Text Reveal
+            tl.fromTo('.reveal-text',
+                { y: "150%", skewY: 15 },
+                { y: "0%", skewY: 0, duration: 1.6, stagger: 0.15 },
+                0.4
+            );
+
+            // Fade in and slide up hero elements
+            tl.to('.gsap-fade', { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, y: -15 }, 0.3);
+
+            // Bring in the image card
+            tl.to('.gsap-img', { opacity: 1, scale: 1, duration: 1.8 }, 0.8);
+            tl.fromTo('.gsap-img', { x: 50, y: 50 }, { x: 0, y: 0, duration: 1.8 }, 0.8);
+
+            // Stats cards entrance
+            tl.to('.gsap-widget', { opacity: 1, duration: 1.2, stagger: 0.3 }, 1.5);
+            tl.fromTo('.gsap-widget', { y: 40, scale: 0.95 }, { y: 0, scale: 1, duration: 1.2, stagger: 0.3 }, 1.5);
+
+            // Floating idles
+            gsap.to('.float-slow', {
+                y: -18, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 2.7
+            });
+            gsap.to('.float-medium', {
+                y: 15, duration: 3.2, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 2.9
+            });
+
+            // Features Scroll Reveal
+            gsap.to('.feature-card', {
+                scrollTrigger: {
+                    trigger: '#features',
+                    start: 'top 75%'
+                },
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+
+            // Galerie Scroll Reveal (progresivní vylepšení — bez JS zůstává viditelná)
+            if (document.querySelector('.gallery-item')) {
+                gsap.set('.gallery-item', { opacity: 0, y: 30 });
+                gsap.to('.gallery-item', {
+                    scrollTrigger: { trigger: '#galerie', start: 'top 80%' },
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: 0.12,
+                    ease: 'power3.out'
+                });
+            }
+
+            // --- Interactive Functional Artifacts Implementations ---
+
+            // 1. Diagnostic Shuffler
+            const shufflerData = [
+                { id: 1, text: "Aktivace systému", subtext: "Spouštění domovní automatizace" },
+                { id: 2, text: "Synchronizace senzorů", subtext: "Načítání biometrických dat" },
+                { id: 3, text: "Klimatický režim", subtext: "Optimalizace teploty a stínění" }
+            ];
+            const shufflerContainer = document.getElementById('shuffler-container');
+            let shufflerCards = [...shufflerData];
+
+            const renderShuffler = () => {
+                shufflerContainer.innerHTML = '';
+                shufflerCards.forEach((card, i) => {
+                    const translateY = i * 20;
+                    const scale = 1 - i * 0.05;
+                    const opacity = 1 - i * 0.2;
+                    const zIndex = 10 - i;
+
+                    const el = document.createElement('div');
+                    el.className = 'absolute top-0 left-0 w-full bg-white/70 backdrop-blur-md border border-metal-200 p-6 rounded-[2rem] shadow-sm transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]';
+                    el.style.transform = `translateY(${translateY}px) scale(${scale})`;
+                    el.style.opacity = opacity;
+                    el.style.zIndex = zIndex;
+
+                    el.innerHTML = `
+                        <div class="font-syne font-bold text-lg leading-tight tracking-tight text-metal-900">${card.text}</div>
+                        <p class="text-metal-600 text-sm mt-1 font-inter">${card.subtext}</p>
+                    `;
+                    shufflerContainer.appendChild(el);
+                });
+            };
+
+            renderShuffler();
+            setInterval(() => {
+                const last = shufflerCards.pop();
+                shufflerCards.unshift(last);
+                renderShuffler();
+            }, 3000);
+
+            // 2. Telemetry Typewriter
+            const fullText = "Inicializace AI správy domácnosti.\\nNačítání dynamických proměnných klimatu…\\nZabezpečení aktivní: Rizika minimalizována.\\nEnergetická účinnost optimalizována.";
+            const typeContent = document.getElementById('typewriter-content');
+            let typeIndex = 0;
+
+            const typeInterval = setInterval(() => {
+                if (typeIndex < fullText.length) {
+                    typeContent.textContent = fullText.slice(0, typeIndex + 1);
+                    typeIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 50);
+
+            // Cursor blink handled via CSS @keyframes (no setInterval needed)
+
+            // 3. Cursor Scheduler
+            const cursorTl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+            const dayCt = document.getElementById('day-ct');
+            const saveBtn = document.querySelector('.save-btn');
+
+            cursorTl.set('.cursor-svg', { x: -20, y: -20, scale: 1, opacity: 0 })
+                .to('.cursor-svg', { opacity: 1, duration: 0.3 })
+                .to('.cursor-svg', { x: 120, y: 30, duration: 0.8, ease: 'power2.inOut' })
+                .to('.cursor-svg', { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 })
+                .to(dayCt, { backgroundColor: '#adb5bd', color: '#fff', borderColor: '#adb5bd', duration: 0.2 }, "-=0.2")
+                .to('.cursor-svg', { x: 60, y: 150, duration: 0.8, ease: 'power2.inOut' }, "+=0.3")
+                .to('.cursor-svg', { scale: 0.85, duration: 0.1, yoyo: true, repeat: 1 })
+                .to(saveBtn, { scale: 0.96, backgroundColor: '#adb5bd', color: '#fff', borderColor: '#adb5bd', duration: 0.2, yoyo: true, repeat: 1 }, "-=0.2")
+                .to('.cursor-svg', { opacity: 0, duration: 0.3 }, "+=0.5")
+                // Reset states
+                .to(dayCt, { backgroundColor: 'rgba(255,255,255,0.5)', color: '#343a40', borderColor: '#dee2e6', duration: 0.1 })
+                .to(saveBtn, { scale: 1, backgroundColor: '#ffffff', color: '#212529', borderColor: '#e9ecef', duration: 0.1 });
+        });
+
+        // --- 2. Interactive Background (Paper.js — desktop only, saves 67KB on mobile) ---
+        if (window.innerWidth > 1024) {
+            const paperScript = document.createElement('script');
+            paperScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-full.min.js';
+            paperScript.onload = function () {
+                paper.install(window);
+                paper.setup('liquid-canvas');
+
+                const silverTones = [
+                    new paper.Color(233 / 255, 236 / 255, 239 / 255, 0.4),
+                    new paper.Color(206 / 255, 212 / 255, 218 / 255, 0.25)
+                ];
+                const blobCount = 2;
+                const vertexCount = 10;
+                const radius = 400;
+                const blobs = [];
+
+                for (let i = 0; i < blobCount; i++) {
+                    const fluidPath = new paper.Path({ fillColor: silverTones[i], closed: true });
+                    const nodes = [];
+                    for (let j = 0; j < vertexCount; j++) {
+                        const angle = (Math.PI * 2 / vertexCount) * j;
+                        const cx = window.innerWidth * 0.6;
+                        const cy = window.innerHeight * 0.5;
+                        const px = cx + Math.cos(angle) * radius * (0.8 + Math.random() * 0.4);
+                        const py = cy + Math.sin(angle) * radius * (0.8 + Math.random() * 0.4);
+                        fluidPath.add(new paper.Point(px, py));
+                        nodes.push({ baseX: px, baseY: py, angle: Math.random() * Math.PI * 2, speed: 0.003 + Math.random() * 0.006, radiusMod: 30 + Math.random() * 80 });
+                    }
+                    fluidPath.smooth();
+                    blobs.push({ path: fluidPath, nodes: nodes });
+                }
+
+                let mEv = null;
+                view.onMouseMove = function (event) { mEv = event; };
+
+                view.onFrame = function () {
+                    blobs.forEach((blob) => {
+                        const p = blob.path;
+                        for (let j = 0; j < vertexCount; j++) {
+                            const node = blob.nodes[j];
+                            node.angle += node.speed;
+                            let tX = node.baseX + Math.cos(node.angle) * node.radiusMod;
+                            let tY = node.baseY + Math.sin(node.angle) * node.radiusMod;
+                            if (mEv) {
+                                let dx = mEv.point.x - tX, dy = mEv.point.y - tY;
+                                if (Math.sqrt(dx * dx + dy * dy) < 350) { tX -= dx * 0.15; tY -= dy * 0.15; }
+                            }
+                            p.segments[j].point.x += (tX - p.segments[j].point.x) * 0.04;
+                            p.segments[j].point.y += (tY - p.segments[j].point.y) * 0.04;
+                        }
+                        p.smooth({ type: 'continuous' });
+                    });
+                };
+
+                view.onResize = function () {
+                    blobs.forEach(blob => {
+                        blob.nodes.forEach((node, i) => {
+                            const a = (Math.PI * 2 / vertexCount) * i;
+                            node.baseX = window.innerWidth * 0.6 + Math.cos(a) * 400 * (0.8 + Math.random() * 0.4);
+                            node.baseY = window.innerHeight * 0.5 + Math.sin(a) * 400 * (0.8 + Math.random() * 0.4);
+                        });
+                    });
+                };
+            };
+            document.head.appendChild(paperScript);
+        }
+    </script>
+</body>
+
+</html>
